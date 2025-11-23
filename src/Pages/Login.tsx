@@ -38,8 +38,8 @@ const Login: React.FC = () => {
       localStorage.setItem("token", res.data.token);
       setForm({ email: "", password: "" });
       
-      // Redirect to dashboard or home page
-      window.location.href = "/dashboard";
+      // Redirect to dashboard 
+      window.location.href = "/ModiFyX-Dashboard";
     } catch (error: any) {
       alert(error.response?.data?.message || "Login failed");
     } finally {
