@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import bgImage from "../assets/35ef9d04a043f3364ea0e3c57a5c2db2.jpg";
 import bgImage2 from "../assets/95ed0b9c6915d22952ea343e6b1839d3.jpg";
+import { Link } from "react-router-dom";
 
 
 
@@ -66,7 +67,7 @@ const Register: React.FC = () => {
             ModiFyX
           </h1>
 
-          <p className="text-gray-200 leading-relaxed text-2xl mb-4 Font-bold ">
+          <p className="text-gray-200 leading-relaxed text-2xl mb-2 Font-bold ">
             Let’s Get Started<br></br></p>
 
             <p className="text-gray-200 leading-relaxed mb-2">
@@ -127,7 +128,17 @@ const Register: React.FC = () => {
             {loading ? "Creating Account..." : "Sign Up"}
           </button>
         </form>
-
+          <div className="text-center mt-6 ">
+                <p className="text-gray-300">
+                  Already a Member?{" "}
+                  <Link 
+                    to="/ " 
+                    className="text-[#C04000] hover:text-[#0047AB] font-semibold transition-colors"
+                  >
+                    Sign In
+                  </Link>
+                </p>
+              </div>
       </div>
     </div>
   </div>
