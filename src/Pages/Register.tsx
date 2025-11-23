@@ -62,14 +62,16 @@ const Register: React.FC = () => {
      <div className="w-[455px] text-white p-10 flex flex-col justify-center rounded-l-2xl bg-cover bg-center"
           // style={{ backgroundImage: `url(${bgImage})` }}
         >
-          <h1 className="text-6xl font-bold font-pncb  mb-80">
+          <h1 className="text-6xl font-bold font-pncb  mb-64">
             ModiFyX
           </h1>
 
-          {/* <p className="text-gray-200 leading-relaxed">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas placerat
-            ultricies libero eu pharetra. Vestibulum a ultricies augue.
-          </p> */}
+          <p className="text-gray-200 leading-relaxed text-2xl mb-4 Font-bold ">
+            Let’s Get Started<br></br></p>
+
+            <p className="text-gray-200 leading-relaxed mb-2">
+            Start your journey with ModiFyX — customize your vehicle your way.
+          </p>
         </div>
 
       {/* RIGHT SECTION (SIGNUP FORM) */}
