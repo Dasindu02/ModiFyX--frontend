@@ -1,15 +1,15 @@
-import type { ReactNode } from "react";
-import { Navigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+// import type { ReactNode } from "react";
+// import { Navigate } from "react-router-dom";
+// import { useAuth } from "../context/AuthContext";
 
-const ProtectedRoute = ({ children }: { children: ReactNode }) => {
-  const { isLoggedIn } = useAuth();
+// const ProtectedRoute = ({ children }: { children: ReactNode }) => {
+//   const { isLoggedIn } = useAuth();
 
-  if (!isLoggedIn) {
-    return <Navigate to="/access-denied" replace />;
-  }
+//   if (!isLoggedIn) {
+//     return <Navigate to="/access-denied" replace />;
+//   }
 
-  return <>{children}</>;
-};
+//   return <>{children}</>;
+// };
 
-export default ProtectedRoute;
+// export default ProtectedRoute;

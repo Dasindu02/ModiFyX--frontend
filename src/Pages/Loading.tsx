@@ -6,7 +6,7 @@ const LoadingVideo = () => {
   const navigate = useNavigate();
 
   const handleVideoEnd = () => {
-    navigate("/ModiFyX-Dashboard");
+    navigate("/Home");
   };
 
   return (

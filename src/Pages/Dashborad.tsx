@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../context/AuthContext";
 import img1 from "../assets/bgimage.jpg";
 import img2 from "../assets/bg2.jpg";
 import img3 from "../assets/bg3.jpg";
@@ -7,7 +6,6 @@ import img3 from "../assets/bg3.jpg";
 
 const Dashboard = () => {
   const [currentBg, setCurrentBg] = useState(0);
-  const { logout } = useAuth();
 
   const backgroundImages = [img1, img2, img3];
 
@@ -41,10 +39,10 @@ const Dashboard = () => {
           </div>
 
           <div className="space-x-6">
-            <a href="/ModiFyX-Dashboard" className="hover:text-yellow-500">Home</a>
-            <a href="#modifications" className="hover:text-yellow-500">Modifications</a>
-            <a href="#gallery" className="hover:text-yellow-500">Gallery</a>
-            <a href="#ar-view" className="hover:text-yellow-500">AR View</a>
+            <a href="/" className="hover:text-yellow-500">Home</a>
+            <a href="/Login" className="hover:text-yellow-500">Modifications</a>
+            <a href="/Login" className="hover:text-yellow-500">Gallery</a>
+            <a href="/Login" className="hover:text-yellow-500">AR View</a>
             <a href="/Contact" className="hover:text-yellow-500">Contact</a>
           </div>
         </div>
@@ -78,19 +76,13 @@ const Dashboard = () => {
       </a>
 
        <a
-          href="/"
+          href="/Login"
           className="bg-yellow-500  text-black px-6 py-3 rounded-full font-semibold 
           hover:bg-gray-200 transition-all duration-300"
         >
           Get Started
         </a> 
 
-        <button
-              onClick={logout}
-              className="ml-4 px-4 py-2 bg-red-600 rounded-md hover:bg-red-500"
-            >
-              Logout
-            </button>
                  
     </div>
   </div>

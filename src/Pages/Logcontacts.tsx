@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import Bg from "../assets/back2.jpg";
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 
-export default function Contact() {
+export default function LogContact() {
   return (
     <div className="fixed inset-0 h-screen w-screen overflow-hidden bg-black text-white">
 
@@ -14,11 +14,11 @@ export default function Contact() {
           </div>
 
           <div className="space-x-6">
-            <a href="/" className="hover:text-yellow-500">Home</a>
-            <a href="/Login" className="hover:text-yellow-500">Modifications</a>
-            <a href="/Login" className="hover:text-yellow-500">Gallery</a>
-            <a href="/Login" className="hover:text-yellow-500">AR View</a>
-            <a href="/Contact" className="hover:text-yellow-500">Contact</a>
+            <a href="/Home" className="hover:text-yellow-500">Home</a>
+            <a href="#modification" className="hover:text-yellow-500">Modifications</a>
+            <a href="#gallery" className="hover:text-yellow-500">Gallery</a>
+            <a href="#ar view" className="hover:text-yellow-500">AR View</a>
+            <a href="/Log-Contacts" className="hover:text-yellow-500">Contact</a>
           </div>
         </div>
       </nav>
