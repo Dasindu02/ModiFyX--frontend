@@ -39,7 +39,7 @@ const Login: React.FC = () => {
       setForm({ email: "", password: "" });
       
       // Redirect to dashboard 
-      window.location.href = "/ModiFyX-Dashboard";
+      window.location.href = "/Loading";
     } catch (error: any) {
       alert(error.response?.data?.message || "Login failed");
     } finally {
