@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import bgImage2 from "../assets/95ed0b9c6915d22952ea343e6b1839d3.jpg";
 
 interface LoginForm {
@@ -14,7 +15,8 @@ const Login: React.FC = () => {
     password: "",
   });
 
-  
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -34,8 +36,11 @@ const Login: React.FC = () => {
       );
 
       alert(res.data.message);
-      // Store token in localStorage or context
+
       localStorage.setItem("token", res.data.token);
+
+       login(res.data.token);
+
       setForm({ email: "", password: "" });
       
       // Redirect to dashboard 
