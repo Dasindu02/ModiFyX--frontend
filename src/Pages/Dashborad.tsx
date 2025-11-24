@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import { useAuth } from "../context/AuthContext";
 import img1 from "../assets/bgimage.jpg";
 import img2 from "../assets/bg2.jpg";
 import img3 from "../assets/bg3.jpg";
@@ -7,6 +7,7 @@ import img3 from "../assets/bg3.jpg";
 
 const Dashboard = () => {
   const [currentBg, setCurrentBg] = useState(0);
+  const { logout } = useAuth();
 
   const backgroundImages = [img1, img2, img3];
 
@@ -82,7 +83,15 @@ const Dashboard = () => {
           hover:bg-gray-200 transition-all duration-300"
         >
           Get Started
-        </a>      
+        </a> 
+
+        <button
+              onClick={logout}
+              className="ml-4 px-4 py-2 bg-red-600 rounded-md hover:bg-red-500"
+            >
+              Logout
+            </button>
+                 
     </div>
   </div>
 
