@@ -40,11 +40,11 @@ const Dashboard = () => {
           </div>
 
           <div className="space-x-6">
-            <a href="#home" className="hover:text-yellow-500">Home</a>
+            <a href="/ModiFyX-Dashboard" className="hover:text-yellow-500">Home</a>
             <a href="#modifications" className="hover:text-yellow-500">Modifications</a>
             <a href="#gallery" className="hover:text-yellow-500">Gallery</a>
             <a href="#ar-view" className="hover:text-yellow-500">AR View</a>
-            <a href="#contact" className="hover:text-yellow-500">Contact</a>
+            <a href="/Contact" className="hover:text-yellow-500">Contact</a>
           </div>
         </div>
       </nav>
