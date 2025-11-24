@@ -26,31 +26,36 @@ const Login: React.FC = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+  e.preventDefault();
+  setLoading(true);
 
-    try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/auth/login`,
-        form
-      );
+  try {
+    const res = await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/auth/login`,
+      form
+    );
 
-      alert(res.data.message);
+    console.log("LOGIN RESPONSE:", res.data);   
+    console.log("USER OBJECT:", res.data.user);
 
-      localStorage.setItem("token", res.data.token);
+    alert(res.data.message);
 
-      //  login(res.data.token);
+    // Store token
+    localStorage.setItem("token", res.data.token);
 
-      setForm({ email: "", password: "" });
-      
-      // Redirect to dashboard 
-      window.location.href = "/Loading";
-    } catch (error: any) {
-      alert(error.response?.data?.message || "Login failed");
-    } finally {
-      setLoading(false);
-    }
-  };
+    // Store user (IMPORTANT)
+    localStorage.setItem("user", JSON.stringify(res.data.user));
+
+    setForm({ email: "", password: "" });
+
+    window.location.href = "/Loading";
+  } catch (error: any) {
+    alert(error.response?.data?.message || "Login failed");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="fixed w-full min-h-screen flex justify-center items-center bg-[#36454F] p-4">
