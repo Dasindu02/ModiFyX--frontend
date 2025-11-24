@@ -6,36 +6,64 @@ import Dashboard from "./Pages/Dashborad";
 import LoadingVideo from "./Pages/Loading";
 import Contact from "./Pages/Contact";
 import AccessDenied from "./Pages/AccessDenied";
-
-import ProtectedRoute from "./Routes/ProtectedRoute";
-import { AuthProvider } from "./context/AuthContext";
+import Home from "./Pages/Homepage";
+import LogContact from "./Pages/Logcontacts";
+// import ProtectedRoute from "./Routes/ProtectedRoute";
+// import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (
-    <AuthProvider>
+    // <AuthProvider>
       <BrowserRouter>
         <Routes>
           {/* Public */}
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="/Contact" element={<Contact />} />
+
 
           {/* Protected */}
           <Route
-            path="/ModiFyX-Dashboard"
+            path="/register"
             element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
+              // <ProtectedRoute>
+                <Register />
+              // </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/Log-Contacts"
+            element={
+              // <ProtectedRoute>
+                <LogContact />
+              // </ProtectedRoute>
+            }
+          />
+
+           <Route
+            path="/Login"
+            element={
+              // <ProtectedRoute>
+                <Login />
+              // </ProtectedRoute>
+            }
+          />
+
+           <Route
+            path="/Home"
+            element={
+              // <ProtectedRoute>
+                <Home />
+              // </ProtectedRoute>
             }
           />
 
           <Route
             path="/Loading"
             element={
-              <ProtectedRoute>
+              // <ProtectedRoute>
                 <LoadingVideo />
-              </ProtectedRoute>
+              // </ProtectedRoute>
             }
           />
 
@@ -47,7 +75,7 @@ function App() {
           <Route path="*" element={<Login />} />
         </Routes>
       </BrowserRouter>
-    </AuthProvider>
+    // </AuthProvider>
   );
 }
 
