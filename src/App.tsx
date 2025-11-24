@@ -3,6 +3,8 @@ import Register from "../src/Pages/Register";
 import Login from "../src/Pages/Login";
 import Dashboard from "./Pages/Dashborad";
 import LoadingVideo from "./Pages/Loading";
+import Contact from "./Pages/Contact";
+
 
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
 
         <Route path="/Loading" element={<LoadingVideo />} />
       
+        <Route path="/Contact" element={<Contact/>} />
 
       
         <Route path="/ModiFyX-Dashboard" element={<Dashboard />} />
