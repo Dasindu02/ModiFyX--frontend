@@ -8,6 +8,7 @@ import Contact from "./Pages/Contact";
 import AccessDenied from "./Pages/AccessDenied";
 import Home from "./Pages/Homepage";
 import LogContact from "./Pages/Logcontacts";
+import Profile from "./Pages/profile";
 // import ProtectedRoute from "./Routes/ProtectedRoute";
 // import { AuthProvider } from "./context/AuthContext";
 
@@ -27,6 +28,15 @@ function App() {
             element={
               // <ProtectedRoute>
                 <Register />
+              // </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/Profile"
+            element={
+              // <ProtectedRoute>
+                <Profile />
               // </ProtectedRoute>
             }
           />
