@@ -404,6 +404,11 @@ const Profile: React.FC = () => {
           </div>
         </div>
       </div>
+      <footer className="relative z-10 bg-black bg-opacity-80 text-white py-8 px-4">
+        <div className="container mx-auto text-center">
+          <p>&copy; 2025 ModiFyX. All rights reserved-Dasindu Dinsara. Transform your vehicle with AR technology.</p>
+        </div>
+      </footer>
     </div>
   );
 };
