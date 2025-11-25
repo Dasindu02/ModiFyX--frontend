@@ -1,3 +1,5 @@
+//Login.tsx
+
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -26,35 +28,52 @@ const Login: React.FC = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setLoading(true);
+    e.preventDefault();
+    setLoading(true);
 
-  try {
-    const res = await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/auth/login`,
-      form
-    );
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/auth/login`,
+        form
+      );
 
-    console.log("LOGIN RESPONSE:", res.data);   
-    console.log("USER OBJECT:", res.data.user);
+      console.log("LOGIN RESPONSE:", res.data);   
+      console.log("USER OBJECT:", res.data.user);
+      console.log("ALL USER DATA:", res.data.user);
 
-    alert(res.data.message);
+      alert(res.data.message);
 
-    // Store token
-    localStorage.setItem("token", res.data.token);
+      // Use _id from backend response for consistency
+      const userId = res.data.user.id || res.data.user._id;
+      
+      // Store token and user data
+      localStorage.setItem("userId", userId);
+      localStorage.setItem("token", res.data.token);
 
-    // Store user (IMPORTANT)
-    localStorage.setItem("user", JSON.stringify(res.data.user));
+      // Store user (IMPORTANT) - ensure we use the correct ID field
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          id: userId, // Use the consistent ID
+          fullName: res.data.user.fullName,
+          email: res.data.user.email,
+          phone: res.data.user.phone,
+          age: res.data.user.age,
+          district: res.data.user.district,
+          vehicleModel: res.data.user.vehicleModel,
+          registrationDate: res.data.user.registrationDate
+        })
+      );
 
-    setForm({ email: "", password: "" });
+      setForm({ email: "", password: "" });
 
-    window.location.href = "/Loading";
-  } catch (error: any) {
-    alert(error.response?.data?.message || "Login failed");
-  } finally {
-    setLoading(false);
-  }
-};
+      window.location.href = "/Loading";
+    } catch (error: any) {
+      alert(error.response?.data?.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
+  };
 
 
   return (
