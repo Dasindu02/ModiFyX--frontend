@@ -1,8 +1,24 @@
 import { motion } from "framer-motion";
 import Bg from "../assets/back2.jpg";
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
+import { useEffect, useState } from "react";
+
+
 
 export default function LogContact() {
+   const [email, setEmail] = useState("");
+
+ useEffect(() => {
+  const userData = localStorage.getItem("user");
+
+  if (userData) {
+    const user = JSON.parse(userData);
+    setEmail(user.email || ""); 
+  }
+}, []);
+
+
+
   return (
     <div className="fixed inset-0 h-screen w-screen overflow-hidden bg-black text-white">
 
@@ -112,11 +128,15 @@ export default function LogContact() {
                 className="p-3 rounded-xl bg-white/20 focus:bg-white/30 outline-none"
               />
 
-              <input
+             <input
                 type="email"
+                value={email || ""}   
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
                 className="p-3 rounded-xl bg-white/20 focus:bg-white/30 outline-none"
               />
+
+
 
               <textarea
                 rows={4}
