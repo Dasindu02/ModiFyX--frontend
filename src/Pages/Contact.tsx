@@ -1,13 +1,51 @@
 import { motion } from "framer-motion";
 import Bg from "../assets/back2.jpg";
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
+import emailjs from '@emailjs/browser';
+import { useRef, useState} from "react";
+import type { FormEvent } from 'react';
 
 export default function Contact() {
+  const formRef = useRef<HTMLFormElement>(null);
+  const [isSending, setIsSending] = useState(false);
+  const [messageSent, setMessageSent] = useState(false);
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    
+    if (!formRef.current) {
+      console.error('Form reference is null');
+      return;
+    }
+
+    setIsSending(true);
+
+    try {
+      await emailjs.sendForm(
+        'service_7dljqlj', // Serviceid
+        'template_ssjqa7u', // templateid
+        formRef.current,
+        'R8ScU0lB5eGP5p4qu' //key
+      );
+
+      setMessageSent(true);
+      formRef.current.reset();
+      
+      // Hide success message after 5 second
+      setTimeout(() => setMessageSent(false), 6000);
+    } catch (error) {
+      console.error('Failed to send message:', error);
+      alert('Failed to send message. Please try again.');
+    } finally {
+      setIsSending(false);
+    }
+  };
+
   return (
     <div className="fixed inset-0 h-screen w-screen overflow-hidden bg-black text-white">
 
       {/* NAVBAR */}
-     <nav className="relative bg-black bg-opacity-70 text-white p-4 z-10">
+      <nav className="relative bg-black bg-opacity-70 text-white p-4 z-10">
         <div className="container mx-auto flex justify-between items-center">
           <div className="text-3xl font-bold font-pncb text-yellow-500 tracking-wider ">
             ModiFyX
@@ -35,21 +73,19 @@ export default function Contact() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 max-w-5xl w-full mb-16 ">
 
           {/* LEFT SIDE DETAILS */}
-        <motion.div
-                initial={{ opacity: 0, x: -40 }}
-                animate={{ 
-                    opacity: 1, 
-                    x: [-40, 40, -40]  
-                }}
-                transition={{ 
-                    duration: 6,        
-                    repeat: Infinity,   
-                    ease: "easeInOut" 
-                }}
-                className="space-y-10"
-                >
-
-
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            animate={{ 
+                opacity: 1, 
+                x: [-40, 40, -40]  
+            }}
+            transition={{ 
+                duration: 6,        
+                repeat: Infinity,   
+                ease: "easeInOut" 
+            }}
+            className="space-y-10"
+          >
             <h1 className="text-4xl font-poppins font-bold text-yellow-500 text-center md:text-left">
               Contact Us
             </h1>
@@ -105,29 +141,50 @@ export default function Contact() {
               Send Message
             </motion.h2>
 
-            <form className="flex flex-col gap-6">
+            {/* Success Message */}
+            {messageSent && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-green-500 text-white p-3 rounded-lg mb-4"
+              >
+                Message sent successfully! We'll get back to you soon.
+              </motion.div>
+            )}
+
+            <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-6">
               <input
                 type="text"
+                name="user_name"
                 placeholder="Your Name"
                 className="p-3 rounded-xl bg-white/20 focus:bg-white/30 outline-none"
+                required
               />
 
               <input
                 type="email"
+                name="user_email"
                 placeholder="Email"
                 className="p-3 rounded-xl bg-white/20 focus:bg-white/30 outline-none"
+                required
               />
 
               <textarea
+                name="message"
                 rows={4}
                 placeholder="Message"
                 className="p-3 rounded-xl bg-white/20 focus:bg-white/30 outline-none"
+                required
               />
 
               <button
-                className="bg-[#C04000] hover:bg-[#e94d10] py-3 rounded-xl font-semibold text-lg transition-all"
+                type="submit"
+                disabled={isSending}
+                className={`${
+                  isSending ? 'bg-gray-600' : 'bg-[#C04000] hover:bg-[#e94d10]'
+                } py-3 rounded-xl font-semibold text-lg transition-all disabled:cursor-not-allowed`}
               >
-                Send Message
+                {isSending ? 'Sending...' : 'Send Message'}
               </button>
             </form>
           </motion.div>
