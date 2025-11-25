@@ -1,12 +1,17 @@
 import { motion } from "framer-motion";
 import Bg from "../assets/back2.jpg";
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { useEffect, useState , useRef  } from "react";
+import emailjs from '@emailjs/browser';
+import type { FormEvent } from 'react';
 
 
 
 export default function LogContact() {
-   const [email, setEmail] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
+  const [email, setEmail] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const [messageSent, setMessageSent] = useState(false);
 
  useEffect(() => {
   const userData = localStorage.getItem("user");
@@ -16,6 +21,36 @@ export default function LogContact() {
     setEmail(user.email || ""); 
   }
 }, []);
+
+
+const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    if (!formRef.current) {
+      console.error("Form reference is null");
+      return;
+    }
+
+    setIsSending(true);
+
+    try {
+      await emailjs.sendForm(
+        "service_7dljqlj",
+        "template_nuaaap4",
+        formRef.current,
+        "R8ScU0lB5eGP5p4qu"
+      );
+
+      setMessageSent(true);
+      formRef.current.reset();
+      setTimeout(() => setMessageSent(false), 6000);
+    } catch (error) {
+      console.error("Failed to send message:", error);
+      alert("Failed to send message. Please try again.");
+    } finally {
+      setIsSending(false);
+    }
+  };
 
 
 
@@ -122,35 +157,55 @@ export default function LogContact() {
               Send Message
             </motion.h2>
 
-            <form className="flex flex-col gap-6">
+             {messageSent && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-green-500 text-white p-3 rounded-lg mb-4"
+              >
+                Message sent successfully! We'll get back to you soon.
+              </motion.div>
+            )}
+
+            <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-6">
+
               <input
                 type="text"
+                name="user_name"
                 placeholder="Your Name"
                 className="p-3 rounded-xl bg-white/20 focus:bg-white/30 outline-none"
+                required
               />
 
-             <input
+              <input
                 type="email"
-                value={email || ""}   
+                name="user_email"
+                value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
                 className="p-3 rounded-xl bg-white/20 focus:bg-white/30 outline-none"
+                required
               />
 
-
-
               <textarea
+                name="message"
                 rows={4}
                 placeholder="Message"
                 className="p-3 rounded-xl bg-white/20 focus:bg-white/30 outline-none"
+                required
               />
 
               <button
-                className="bg-[#C04000] hover:bg-[#e94d10] py-3 rounded-xl font-semibold text-lg transition-all"
+                type="submit"
+                disabled={isSending}
+                className={`${
+                  isSending ? "bg-gray-600" : "bg-[#C04000] hover:bg-[#e94d10]"
+                } py-3 rounded-xl font-semibold text-lg transition-all disabled:cursor-not-allowed`}
               >
-                Send Message
+                {isSending ? "Sending..." : "Send Message"}
               </button>
             </form>
+
           </motion.div>
 
         </div>
