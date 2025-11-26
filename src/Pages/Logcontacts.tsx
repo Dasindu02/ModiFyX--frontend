@@ -98,7 +98,7 @@ export default function LogContact() {
           </div>
 
           {/* Links + Avatar */}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-10">
 
             <a href="/Home" className="hover:text-yellow-500">Home</a>
             <a href="#modification" className="hover:text-yellow-500">Modifications</a>
