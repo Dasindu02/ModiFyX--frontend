@@ -37,6 +37,7 @@ const Register: React.FC = () => {
 
       alert(res.data.message);
       setForm({ fullName: "", email: "", password: "" });
+        window.location.href = "/Login";
     } catch (error: any) {
       alert(error.response?.data?.message || "Registration failed");
     } finally {
