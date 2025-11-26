@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import BGIMG from "../assets/back2.jpg";
+import { useNavigate } from "react-router-dom";  
+
 
 type User = {
   id: string;
@@ -9,6 +11,8 @@ type User = {
 
 const Home: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     try {
@@ -21,6 +25,12 @@ const Home: React.FC = () => {
       console.error("Could not read user from localStorage:", err);
     }
   }, []);
+
+  const handleLogout = () => {
+  localStorage.removeItem("user");
+  navigate("/");
+};
+
 
   const features = [
     {
@@ -71,17 +81,32 @@ const Home: React.FC = () => {
 
       <nav className="relative bg-black bg-opacity-70 text-white p-4 z-10">
         <div className="container mx-auto flex justify-between items-center">
-          <div className="text-3xl font-bold font-pncb text-yellow-500 tracking-wider">
+          <div className="text-3xl font-bold font-pncb text-yellow-500 ">
             ModiFyX
           </div>
 
-          <div className="space-x-6">
+          <div className="space-x-12">
             <a href="/Home" className="hover:text-yellow-500">Home</a>
             <a href="#modifications" className="hover:text-yellow-500">Modifications</a>
             <a href="#gallery" className="hover:text-yellow-500">Gallery</a>
             <a href="/profile" className="hover:text-yellow-500">Profile</a>            
             <a href="#ar-view" className="hover:text-yellow-500">AR View</a>
             <a href="/Log-Contacts" className="hover:text-yellow-500">Contact</a>
+
+             <button
+                onClick={handleLogout}
+                className="
+                  ml-10 px-5 py-2.5 font-poppins text-white font-semibold
+                  border border-red-500 rounded-xl 
+                  backdrop-blur-md bg-red-600/20
+                  hover:bg-red-600 hover:shadow-red-500/50
+                  hover:shadow-lg hover:-translate-y-0.5
+                  transition-all duration-300
+                "
+              >
+                Logout
+              </button>
+
           </div>
         </div>
       </nav>
@@ -102,6 +127,13 @@ const Home: React.FC = () => {
           <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-black transition duration-300">
             View Gallery
           </button>
+          {/* <button
+    onClick={handleLogout}
+    className="ml-4 px-4 py-2 border border-red-500 text-red-500 rounded-lg 
+               hover:bg-red-500 hover:text-white transition duration-300"
+  >
+    Logout
+  </button> */}
         </div>
       </section>
 
