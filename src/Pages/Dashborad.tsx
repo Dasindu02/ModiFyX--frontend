@@ -21,7 +21,6 @@ const Dashboard = () => {
    <div className="fixed inset-0 h-screen w-screen overflow-hidden">
 
 
-      {/* Sliding Background */}
       <div
         key={currentBg}
         className="absolute inset-0 bg-cover bg-center transition-all duration-[1500ms] animate-slide"
@@ -68,7 +67,7 @@ const Dashboard = () => {
     {/* Buttons */}
     <div className="flex flex-wrap gap-4 mt-16">
       <a
-        href="#technologies"
+        href="/ModiFyX-Technologies"
         className="bg-white/20 backdrop-blur-md text-white px-6 py-3 rounded-full 
         hover:bg-white/30 transition-all duration-300 flex items-center gap-2"
       >
