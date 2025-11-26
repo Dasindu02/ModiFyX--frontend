@@ -86,6 +86,29 @@ const Login: React.FC = () => {
 
   return (
     <div className="fixed w-full min-h-screen flex justify-center items-center bg-[#36454F] p-4">
+
+      {/* BACK BUTTON */}
+          <button
+            onClick={() => navigate(-1)}
+            className="absolute top-6 left-6 bg-black/40 backdrop-blur-md p-3 rounded-full 
+                      hover:bg-black/60 transition shadow-lg border border-white/20"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="white"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </button>
+
       {/* --- BIG CARD --- */}
       <div
         className="w-[90%] max-w-4xl h-[550px] rounded-3xl overflow-hidden shadow-1xl flex"
