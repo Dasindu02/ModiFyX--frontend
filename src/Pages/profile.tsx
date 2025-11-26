@@ -168,12 +168,12 @@ const Profile: React.FC = () => {
           <div className="text-3xl font-bold font-pncb text-yellow-500 tracking-wider">
             ModiFyX
           </div>
-          <div className="relative flex items-center gap-6">
+          <div className="relative flex items-center gap-10">
 
             <a href="/Home" className="hover:text-yellow-500">Home</a>
-            <a href="/profile" className="hover:text-yellow-500">Profile</a>
             <a href="#modifications" className="hover:text-yellow-500">Modifications</a>
             <a href="#gallery" className="hover:text-yellow-500">Gallery</a>
+            <a href="/profile" className="hover:text-yellow-500">Profile</a>
             <a href="#ar-view" className="hover:text-yellow-500">AR View</a>
             <a href="/Log-Contacts" className="hover:text-yellow-500">Contact</a>
 
