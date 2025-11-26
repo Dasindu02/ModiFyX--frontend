@@ -13,6 +13,8 @@ const Home: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
   const [moreOpen, setMoreOpen] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+
   
   useEffect(() => {
   if (window.location.hash) {
@@ -56,6 +58,128 @@ useEffect(() => {
       }
     }
   }, []);
+
+
+  const triggerFireworks = () => {
+  const container = document.getElementById('fireworks-container');
+  if (!container) return;
+
+  container.innerHTML = '';
+
+  createFireworkWave(container, 60, 0); // First wave
+  setTimeout(() => createFireworkWave(container, 25, 500), 500); // Second wave
+  setTimeout(() => createFireworkWave(container, 30, 1000), 1000); // Third wave
+  setTimeout(() => createFireworkWave(container, 20, 1500), 1500); // Fourth wave
+  setTimeout(() => createFireworkWave(container, 15, 2000), 2000); // Final wave
+};
+
+const createFireworkWave = (container: HTMLElement, count: number, delay: number) => {
+  for (let i = 0; i < count; i++) {
+    setTimeout(() => {
+      createFirework(container);
+    }, delay + Math.random() * 800);
+  }
+};
+
+const createFirework = (container: HTMLElement) => {
+  const firework = document.createElement('div');
+  const colors = ['#FFD700', '#FFA500', '#FF6B00', '#FF4081', '#4CAF50', '#2196F3', '#9C27B0', '#00BCD4', '#8BC34A'];
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  
+  const left = 30 + Math.random() * 40;
+  const top = 20 + Math.random() * 60;
+  
+  firework.style.cssText = `
+    position: absolute;
+    left: ${left}%;
+    top: ${top}%;
+    width: 8px;
+    height: 8px;
+    background: ${color};
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    box-shadow: 0 0 10px ${color}, 0 0 20px ${color};
+  `;
+  
+  container.appendChild(firework);
+  
+  createExplosionParticles(container, left, top, color);
+  
+  const animation = firework.animate([
+    { 
+      transform: 'scale(1) translateY(0) rotate(0deg)', 
+      opacity: 1,
+      boxShadow: `0 0 10px ${color}, 0 0 20px ${color}`
+    },
+    { 
+      transform: 'scale(1.5) translateY(-10px) rotate(180deg)', 
+      opacity: 0.8,
+      boxShadow: `0 0 20px ${color}, 0 0 40px ${color}`
+    },
+    { 
+      transform: `scale(0) translateY(-${Math.random() * 80 + 40}px) translateX(${Math.random() * 60 - 30}px) rotate(360deg)`, 
+      opacity: 0,
+      boxShadow: `0 0 5px ${color}, 0 0 10px ${color}`
+    }
+  ], {
+    duration: Math.random() * 2000 + 2000, 
+    easing: 'cubic-bezier(0.2, 0.8, 0.4, 1)'
+  });
+  
+ 
+  animation.onfinish = () => {
+    firework.remove();
+  };
+};
+
+const createExplosionParticles = (container: HTMLElement, left: number, top: number, color: string) => {
+  const particleCount = 12 + Math.floor(Math.random() * 12);
+  
+  for (let i = 0; i < particleCount; i++) {
+    setTimeout(() => {
+      const particle = document.createElement('div');
+      const angle = (i * 360 / particleCount) * (Math.PI / 180);
+      const distance = 30 + Math.random() * 50;
+      
+      particle.style.cssText = `
+        position: absolute;
+        left: ${left}%;
+        top: ${top}%;
+        width: 4px;
+        height: 4px;
+        background: ${color};
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        box-shadow: 0 0 8px ${color};
+      `;
+      
+      container.appendChild(particle);
+      
+      const particleAnimation = particle.animate([
+        { 
+          transform: 'scale(1) translate(0, 0)', 
+          opacity: 1 
+        },
+        { 
+          transform: `scale(0.5) translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`, 
+          opacity: 0 
+        }
+      ], {
+        duration: 1500 + Math.random() * 1000,
+        easing: 'cubic-bezier(0.3, 0.7, 0.4, 1)'
+      });
+      
+      particleAnimation.onfinish = () => {
+        particle.remove();
+      };
+    }, Math.random() * 300);
+  }
+};
+
+
+
 
 
 
@@ -175,9 +299,85 @@ useEffect(() => {
           See real-time previews of modifications before you commit.
         </p>
         <div className="flex gap-4 -mt-36">
-          <button className="bg-yellow-500 text-black px-8 py-3 rounded-lg font-semibold hover:bg-yellow-600 transition duration-300">
+
+          <button  onClick={() => setShowPopup(true)}
+          className="bg-yellow-500 text-black px-8 py-3 rounded-lg font-semibold hover:bg-yellow-600 transition duration-300">
             Try AR Experience
           </button>
+
+             {showPopup && (
+                <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[9999] backdrop-blur-md">
+                  {/* Fireworks Container */}
+                  <div className="absolute inset-0 pointer-events-none" id="fireworks-container"></div>
+                  
+                  <div className="relative bg-gradient-to-br from-gray-800 to-black border border-yellow-500/40 text-white p-8 rounded-3xl shadow-2xl w-90 max-w-md text-center overflow-hidden">
+                    {/* Close Button */}
+                    <button
+                      onClick={() => setShowPopup(false)}
+                      className="absolute top-4 right-4 text-gray-400 hover:text-yellow-500 transition-colors duration-300 z-20"
+                    >
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+
+                    {/* Background Pattern */}
+                    <div className="absolute inset-0 opacity-5">
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-500 rounded-full -translate-y-16 translate-x-16"></div>
+                      <div className="absolute bottom-0 left-0 w-24 h-24 bg-orange-500 rounded-full -translate-x-12 translate-y-12"></div>
+                    </div>
+
+                    <div className="relative z-10">
+                      {/* Animated Icon */}
+                      <div className="text-5xl mb-4 animate-bounce">🚗✨</div>
+                      
+                      {/* Header */}
+                      <h2 className="text-3xl font-bold text-white mb-2">
+                        AR Experience
+                      </h2>
+                      <div className="text-yellow-400 text-lg font-semibold mb-4">Coming January 2026</div>
+
+                      {/* Progress Bar */}
+                      <div className="w-full bg-gray-700 rounded-full h-2 mb-6">
+                        <div className="bg-gradient-to-r from-yellow-500 to-orange-500 h-2 rounded-full w-3/4"></div>
+                      </div>
+
+                      {/* Description */}
+                      <div className="mb-6">
+                        <p className="text-gray-300 mb-4">
+                          We're building something extraordinary! The AR feature will let you visualize modifications on your car in real-time through your phone's camera.
+                        </p>
+                        
+                        <div className="grid grid-cols-2 gap-2 text-sm">
+                          <div className="bg-yellow-500/10 rounded p-2">
+                            <div className="text-yellow-400">📱</div>
+                            <div>Mobile AR</div>
+                          </div>
+                          <div className="bg-yellow-500/10 rounded p-2">
+                            <div className="text-yellow-400">🎨</div>
+                            <div>3D Preview</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Actions */}
+                      <div className="space-y-3">
+                      <button
+                onClick={() => {
+                  triggerFireworks();
+                  // Close popup after longer celebration (6 seconds)
+                  setTimeout(() => setShowPopup(false), 6000);
+                }}
+                className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-black px-6 py-3 rounded-xl font-bold hover:from-yellow-600 hover:to-orange-600 transition-all duration-300 shadow-lg transform hover:scale-105"
+              >
+                Can't Wait! 🚀
+              </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
           <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-black transition duration-300">
             View Gallery
           </button>
@@ -239,7 +439,7 @@ useEffect(() => {
                   Save and compare different looks
                 </li>
               </ul>
-              <button className="bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-600 transition duration-300">
+              <button  className="bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-600 transition duration-300">
                 Launch AR Camera
               </button>
             </div>
