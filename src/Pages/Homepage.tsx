@@ -345,8 +345,7 @@ const createExplosionParticles = (container: HTMLElement, left: number, top: num
                       {/* Description */}
                       <div className="mb-6">
                         <p className="text-gray-300 mb-4">
-                          We're building something extraordinary! The AR feature will let you visualize modifications on your car in real-time through your phone's camera.
-                        </p>
+We’re crafting an advanced AR system that will let you preview real-time car modifications directly through your phone’s camera. Get ready for a whole new way to customize your ride!                        </p>
                         
                         <div className="grid grid-cols-2 gap-2 text-sm">
                           <div className="bg-yellow-500/10 rounded p-2">
