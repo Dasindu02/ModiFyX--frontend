@@ -101,10 +101,10 @@ export default function LogContact() {
           <div className="flex items-center gap-10">
 
             <a href="/Home" className="hover:text-yellow-500">Home</a>
-            <a href="#modification" className="hover:text-yellow-500">Modifications</a>
+            <a href="/Home#modifications" className="hover:text-yellow-500">Modifications</a>
             <a href="#gallery" className="hover:text-yellow-500">Gallery</a>
             <a href="/profile" className="hover:text-yellow-500">Profile</a>
-            <a href="#ar view" className="hover:text-yellow-500">AR View</a>
+            <a href="/Home#ar-view" className="hover:text-yellow-500">AR View</a>
             <a href="/Log-Contacts" className="hover:text-yellow-500">Contact</a>
 
             {/* Avatar Dropdown */}
