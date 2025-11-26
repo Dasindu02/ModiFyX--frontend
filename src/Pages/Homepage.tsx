@@ -14,6 +14,8 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
   const [moreOpen, setMoreOpen] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [showARPopup, setShowARPopup] = useState(false);
+
 
   
   useEffect(() => {
@@ -345,7 +347,7 @@ const createExplosionParticles = (container: HTMLElement, left: number, top: num
                       {/* Description */}
                       <div className="mb-6">
                         <p className="text-gray-300 mb-4">
-We’re crafting an advanced AR system that will let you preview real-time car modifications directly through your phone’s camera. Get ready for a whole new way to customize your ride!                        </p>
+                        We’re crafting an advanced AR system that will let you preview real-time car modifications directly through your phone’s camera. Get ready for a whole new way to customize your ride!                        </p>
                         
                         <div className="grid grid-cols-2 gap-2 text-sm">
                           <div className="bg-yellow-500/10 rounded p-2">
@@ -417,8 +419,8 @@ We’re crafting an advanced AR system that will let you preview real-time car m
                 Experience Modifications in <span className="text-yellow-500">Augmented Reality</span>
               </h2>
               <p className="text-gray-300 text-lg mb-6">
-                Point your camera at your vehicle and see modifications come to life. Our AR technology 
-                accurately maps modifications onto your specific vehicle model in real-time.
+                Point your camera at your vehicle and see modifications appear instantly. Our advanced AR system
+                 accurately detects your vehicle and overlays upgrades in real time—so you can see every detail before making any changes.
               </p>
               <ul className="text-gray-300 space-y-3 mb-8">
                 <li className="flex items-center">
@@ -438,9 +440,34 @@ We’re crafting an advanced AR system that will let you preview real-time car m
                   Save and compare different looks
                 </li>
               </ul>
-              <button  className="bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-600 transition duration-300">
+              <button onClick={() => setShowARPopup(true)}
+                className="bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-600 transition duration-300">
                 Launch AR Camera
               </button>
+            {showARPopup && (
+                  <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-[9999]">
+                    <div className="bg-white text-black p-6 rounded-xl shadow-xl w-80 text-center">
+                      
+                      <h2 className="text-xl font-bold mb-3">Coming Soon 🚧</h2>
+
+                      <p className="text-gray-700 mb-5 leading-relaxed">
+                        The ModiFyX AR App is not launched yet.
+                        <br />
+                        This feature will be available soon.
+                      </p>
+
+                      <button
+                        onClick={() => setShowARPopup(false)}
+                        className="bg-yellow-500 px-5 py-2 rounded-lg font-semibold hover:bg-yellow-600 transition"
+                      >
+                        Close
+                      </button>
+
+                    </div>
+                  </div>
+                )}
+
+
             </div>
             <div className="bg-gray-800 bg-opacity-50 rounded-lg p-8 border border-gray-700">
               <div className="aspect-video bg-gray-900 rounded flex items-center justify-center">
