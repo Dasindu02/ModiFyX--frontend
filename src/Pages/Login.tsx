@@ -50,11 +50,11 @@ const Login: React.FC = () => {
       localStorage.setItem("userId", userId);
       localStorage.setItem("token", res.data.token);
 
-      // Store user (IMPORTANT) - ensure we use the correct ID field
+      // Store user (IMPORTANT) 
       localStorage.setItem(
         "user",
         JSON.stringify({
-          id: userId, // Use the consistent ID
+          id: userId, 
           fullName: res.data.user.fullName,
           email: res.data.user.email,
           phone: res.data.user.phone,
@@ -65,15 +65,23 @@ const Login: React.FC = () => {
         })
       );
 
-      setForm({ email: "", password: "" });
+       const lastLogin = res.data.user.lastLogin; 
+    console.log("Previous Login:", lastLogin);
 
-      window.location.href = "/Loading";
-    } catch (error: any) {
-      alert(error.response?.data?.message || "Login failed");
-    } finally {
-      setLoading(false);
+    if (!lastLogin) {
+      window.location.href = "/Loading";   // first-time login
+    } else {
+      window.location.href = "/Home";      // returning user
     }
-  };
+
+    setForm({ email: "", password: "" });
+
+  } catch (error: any) {
+    alert(error.response?.data?.message || "Login failed");
+  } finally {
+    setLoading(false);
+  }
+};
 
 
   return (
