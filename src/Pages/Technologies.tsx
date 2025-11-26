@@ -333,29 +333,11 @@ const Technologies: React.FC = () => {
           </div>
         </div>
 
-        {/* Final CTA Section */}
-        <div className="text-center">
-          <div className="bg-gradient-to-r from-yellow-500/10 to-orange-600/10 backdrop-blur-md rounded-2xl p-8 border border-yellow-500/20 max-w-4xl mx-auto">
-            <h3 className="text-3xl font-bold text-white mb-4">
-              Ready to Transform Your Car?
-            </h3>
-            <p className="text-gray-300 text-lg mb-6 max-w-2xl mx-auto">
-              Experience the future of car customization with ModiFyX. Preview modifications in real-time before making any commitments.
-            </p>
-            <div className="space-x-4">
-              <button className="bg-yellow-500 text-black px-8 py-3 rounded-full font-bold hover:bg-yellow-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                Download App
-              </button>
-              <button className="border border-yellow-500 text-yellow-500 px-8 py-3 rounded-full font-bold hover:bg-yellow-500 hover:text-black transition-all duration-300">
-                Learn More
-              </button>
-            </div>
-          </div>
-        </div>
+    
       </div>
 
       {/* Footer */}
-      <footer className="relative z-10 bg-black bg-opacity-80 text-white py-8 px-4 mt-20">
+      <footer className="relative z-10 bg-black bg-opacity-80 text-white py-8 px-4 ">
         <div className="container mx-auto text-center">
           <p>&copy; 2025 ModiFyX. All rights reserved - Dasindu Dinsara. Transform your vehicle with AR technology.</p>
         </div>
