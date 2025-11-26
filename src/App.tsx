@@ -9,6 +9,8 @@ import AccessDenied from "./Pages/AccessDenied";
 import Home from "./Pages/Homepage";
 import LogContact from "./Pages/Logcontacts";
 import Profile from "./Pages/profile";
+import Technologies from "./Pages/Technologies";
+
 // import ProtectedRoute from "./Routes/ProtectedRoute";
 // import { AuthProvider } from "./context/AuthContext";
 
@@ -20,6 +22,7 @@ function App() {
           {/* Public */}
           <Route path="/" element={<Dashboard />} />
           <Route path="/Contact" element={<Contact />} />
+            <Route path="/ModiFyX-Technologies" element={<Technologies />} />
 
 
           {/* Protected */}
