@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import img1 from "../assets/backg.jpg";
-
+import interfaceApp from "../assets/interface app.png"; 
 
 
 const Technologies: React.FC = () => {
   const [currentBg, setCurrentBg] = useState(0);
   
-   const backgroundImages = [img1];
+  const backgroundImages = [img1];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -15,11 +15,38 @@ const Technologies: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Launch date: January 1, 2026
+  const launchDate = new Date('2026-01-01').getTime();
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = new Date().getTime();
+      const difference = launchDate - now;
+
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((difference % (1000 * 60)) / 1000)
+        });
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   const technologies = [
     {
       number: "01",
       title: "Augmented Reality (AR)",
-      description: "ModiFyX uses powerful Augmented Reality technology to bring real-time car modifications to life With your Android phone’s camera, you can preview 3D body kits, headlights, taillights, paint colors, wheels, and more—directly on your actual vehicle. Simply point your camera at your car, choose the modification you want, and ModiFyX will place the selected 3D part on your vehicle instantly.",
+      description: "ModiFyX uses powerful Augmented Reality technology to bring real-time car modifications to life With your Android phone's camera, you can preview 3D body kits, headlights, taillights, paint colors, wheels, and more—directly on your actual vehicle. Simply point your camera at your car, choose the modification you want, and ModiFyX will place the selected 3D part on your vehicle instantly.",
       features: ["Real-time preview", "360° view", "No workshop visits needed", "Instant visualization"],
       icon: "🔍"
     },
@@ -111,7 +138,8 @@ const Technologies: React.FC = () => {
             Our Technologies
           </h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-               Powered by AR and VR technologies to transform how you customize your car.          </p>
+            Powered by AR and VR technologies to transform how you customize your car.
+          </p>
         </div>
 
         {/* Technologies Grid */}
@@ -162,48 +190,62 @@ const Technologies: React.FC = () => {
         </div>
 
         {/* App UI Section */}
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto mb-20">
           <div className="bg-gradient-to-br from-black/50 to-gray-900/50 backdrop-blur-md rounded-3xl p-12 border border-white/10 shadow-2xl">
             <div className="text-center mb-12">
               <h2 className="text-5xl font-bold bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent mb-4">
-                First UI Experience
+                Our App Interface
               </h2>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                A seamless, futuristic interface designed for intuitive car customization
+                Experience the future of car customization with our intuitive and modern mobile application
               </p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              {/* UI Description */}
+              {/* App UI Description */}
               <div className="space-y-8">
                 <div className="group">
                   <h3 className="text-2xl font-bold text-white mb-4 flex items-center">
                     <span className="w-3 h-3 bg-yellow-500 rounded-full mr-3 group-hover:animate-pulse"></span>
-                    Splash Screen
+                    Welcome to ModiFyX
                   </h3>
-                  <p className="text-gray-300 leading-relaxed text-lg">
-                    Modern app logo animation with dark neon aesthetics that creates a powerful first impression and builds brand recognition.
+                  <p className="text-gray-300 leading-relaxed text-lg mb-4">
+                    Our app greets you with a clean, modern interface that makes car customization accessible to everyone. The intuitive design guides you through the process of visualizing modifications on your vehicle.
                   </p>
-                  <ul className="mt-4 space-y-2">
-                    {['App logo "ModiFyX"', 'Smooth loading animation', 'Dark/neon theme', 'Quick initialization'].map((item, idx) => (
-                      <li key={idx} className="flex items-center text-gray-300">
-                        <span className="w-2 h-2 bg-yellow-500 rounded-full mr-3"></span>
-                        {item}
-                      </li>
-                    ))}
+                  <ul className="space-y-3">
+                    <li className="flex items-center text-gray-300">
+                      <span className="w-2 h-2 bg-yellow-500 rounded-full mr-3"></span>
+                      <span className="font-semibold text-white">Visualize Your Car:</span> See modifications before you make them
+                    </li>
+                    <li className="flex items-center text-gray-300">
+                      <span className="w-2 h-2 bg-yellow-500 rounded-full mr-3"></span>
+                      <span className="font-semibold text-white">Easy Access:</span> Simple sign-in and account creation
+                    </li>
+                    <li className="flex items-center text-gray-300">
+                      <span className="w-2 h-2 bg-yellow-500 rounded-full mr-3"></span>
+                      <span className="font-semibold text-white">User-Friendly:</span> Clean layout with clear call-to-action buttons
+                    </li>
+                    <li className="flex items-center text-gray-300">
+                      <span className="w-2 h-2 bg-yellow-500 rounded-full mr-3"></span>
+                      <span className="font-semibold text-white">Modern Design:</span> Sleek interface optimized for mobile experience
+                    </li>
                   </ul>
                 </div>
 
                 <div className="group">
                   <h3 className="text-2xl font-bold text-white mb-4 flex items-center">
                     <span className="w-3 h-3 bg-orange-500 rounded-full mr-3 group-hover:animate-pulse"></span>
-                    Welcome Screen
+                    Key Features
                   </h3>
-                  <p className="text-gray-300 leading-relaxed text-lg">
-                    Clean, intuitive interface featuring gradient designs and glass-morphism effects that guide users seamlessly into the app.
-                  </p>
-                  <ul className="mt-4 space-y-2">
-                    {['"Welcome to ModiFyX" title', 'Start/Login/Register buttons', 'Futuristic gradient background', '3D car preview model', 'App description'].map((item, idx) => (
+                  <ul className="space-y-2">
+                    {[
+                      "AR-powered car visualization",
+                      "Real-time modification preview",
+                      "Extensive parts library",
+                      "Color and wrap customization",
+                      "Social sharing capabilities",
+                      
+                    ].map((item, idx) => (
                       <li key={idx} className="flex items-center text-gray-300">
                         <span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>
                         {item}
@@ -213,17 +255,24 @@ const Technologies: React.FC = () => {
                 </div>
               </div>
 
-              {/* UI Preview Placeholder */}
+              {/* App UI Preview */}
               <div className="relative">
-                <div className="bg-gradient-to-br from-gray-900 to-black rounded-2xl p-8 border-2 border-yellow-500/30 shadow-2xl">
-                  <div className="bg-gray-800 rounded-lg h-80 flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="text-6xl mb-4">🚗</div>
-                      <p className="text-gray-400 text-lg">App UI Preview</p>
-                      <p className="text-gray-500 text-sm mt-2">Modern & Intuitive Design</p>
-                    </div>
+                <div className="bg-gradient-to-br from-gray-900 to-black rounded-3xl p-6 border-2 border-yellow-500/30 shadow-2xl transform hover:scale-105 transition-transform duration-300">
+                  {/* iPhone Mockup */}
+                  <div className="bg-gray-800 rounded-2xl p-4 mx-auto" style={{ maxWidth: '300px' }}>
+                    
+                    
+                    {/* App Content */}
+                   <div className="mx-auto overflow-hidden rounded-2xl" style={{ maxWidth: '300px' }}>
+                        <img 
+                            src={interfaceApp}
+                            alt="ModiFyX App Interface"
+                            className="w-full max-w-xs mx-auto rounded-2xl shadow-2xl"
+                            />
+                        </div>
                   </div>
                 </div>
+                
                 {/* Floating Elements */}
                 <div className="absolute -top-4 -right-4 w-8 h-8 bg-yellow-500 rounded-full animate-pulse"></div>
                 <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-orange-500 rounded-full animate-pulse delay-1000"></div>
@@ -232,9 +281,61 @@ const Technologies: React.FC = () => {
           </div>
         </div>
 
-        {/* CTA Section */}
-        <div className="text-center mt-20">
-          <div className="bg-gradient-to-r from-yellow-500/20 to-orange-600/20 backdrop-blur-md rounded-2xl p-8 border border-yellow-500/30 max-w-4xl mx-auto">
+        {/* Launch Countdown Section */}
+        <div className="max-w-4xl mx-auto mb-20">
+          <div className="bg-gradient-to-r from-yellow-500/20 to-orange-600/20 backdrop-blur-md rounded-3xl p-12 border border-yellow-500/30 text-center">
+            <h3 className="text-4xl font-bold text-white mb-6">
+              Launching January 2026
+            </h3>
+            <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
+              Get ready to transform how you customize your car. ModiFyX is coming soon with revolutionary AR technology.
+            </p>
+
+            {/* Countdown Timer */}
+            <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto mb-8">
+              {[
+                { label: 'Days', value: timeLeft.days },
+                { label: 'Hours', value: timeLeft.hours },
+                { label: 'Minutes', value: timeLeft.minutes },
+                { label: 'Seconds', value: timeLeft.seconds }
+              ].map((item, index) => (
+                <div key={index} className="text-center">
+                  <div className="bg-black/50 rounded-xl p-4 border border-yellow-500/30">
+                    <div className="text-3xl font-bold text-yellow-500 mb-1">
+                      {item.value.toString().padStart(2, '0')}
+                    </div>
+                    <div className="text-gray-300 text-sm uppercase tracking-wider">
+                      {item.label}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Join Us Section */}
+            <div className="bg-black/30 rounded-2xl p-8 border border-white/10">
+              <h4 className="text-2xl font-bold text-white mb-4">Join the Revolution</h4>
+              <p className="text-gray-300 mb-6">
+                Be among the first to experience the future of car customization. Sign up for early access and exclusive updates.
+              </p>
+              <div className="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">
+                <button className="w-full sm:w-auto bg-yellow-500 text-black px-8 py-3 rounded-full font-bold hover:bg-yellow-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                  Get Early Access
+                </button>
+                <button className="w-full sm:w-auto border border-yellow-500 text-yellow-500 px-8 py-3 rounded-full font-bold hover:bg-yellow-500 hover:text-black transition-all duration-300">
+                  Join Waitlist
+                </button>
+              </div>
+              <p className="text-gray-400 text-sm mt-4">
+                📧 Get notified when we launch • 🎁 Early access benefits • 🔥 Exclusive content
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Final CTA Section */}
+        <div className="text-center">
+          <div className="bg-gradient-to-r from-yellow-500/10 to-orange-600/10 backdrop-blur-md rounded-2xl p-8 border border-yellow-500/20 max-w-4xl mx-auto">
             <h3 className="text-3xl font-bold text-white mb-4">
               Ready to Transform Your Car?
             </h3>
@@ -252,9 +353,11 @@ const Technologies: React.FC = () => {
           </div>
         </div>
       </div>
-        <footer className="relative z-10 bg-black bg-opacity-80 text-white py-8 px-4">
+
+      {/* Footer */}
+      <footer className="relative z-10 bg-black bg-opacity-80 text-white py-8 px-4 mt-20">
         <div className="container mx-auto text-center">
-          <p>&copy; 2025 ModiFyX. All rights reserved-Dasindu Dinsara. Transform your vehicle with AR technology.</p>
+          <p>&copy; 2025 ModiFyX. All rights reserved - Dasindu Dinsara. Transform your vehicle with AR technology.</p>
         </div>
       </footer>
     </div>
