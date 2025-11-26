@@ -279,9 +279,9 @@ export default function LogContact() {
 
           </motion.div>
 
-        </div>
+        </div>     
       </div>
-
+      
     </div>
   );
 }

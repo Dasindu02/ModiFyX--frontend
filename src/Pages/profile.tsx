@@ -154,7 +154,7 @@ const Profile: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="fixed bg-black inset-0 h-screen w-screen overflow-y-auto">
       {/* Background */}
       <div
         className="fixed inset-0 bg-cover bg-center opacity-40"
