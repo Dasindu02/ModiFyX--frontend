@@ -12,6 +12,9 @@ type User = {
 const Home: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
+  const [moreOpen, setMoreOpen] = useState(false);
+  
+  
 
 
   useEffect(() => {
@@ -30,6 +33,20 @@ const Home: React.FC = () => {
   localStorage.removeItem("user");
   navigate("/");
 };
+
+useEffect(() => {
+    const userData = localStorage.getItem("user");
+
+    if (userData) {
+      try {
+        const user = JSON.parse(userData);
+        setUser(user);
+      } catch (error) {
+        console.error("Error parsing user data:", error);
+      }
+    }
+  }, []);
+
 
 
   const features = [
@@ -79,37 +96,64 @@ const Home: React.FC = () => {
         </p>
       )}
 
-      <nav className="relative bg-black bg-opacity-70 text-white p-4 z-10">
+      <nav className="relative bg-black bg-opacity-70 text-white p-4 z-50">
         <div className="container mx-auto flex justify-between items-center">
-          <div className="text-3xl font-bold font-pncb text-yellow-500 ">
+          
+          {/* Logo */}
+          <div className="text-3xl font-bold font-pncb text-yellow-500 tracking-wider">
             ModiFyX
           </div>
 
-          <div className="space-x-12">
+          {/* Links + Avatar */}
+          <div className="flex items-center gap-10">
+
             <a href="/Home" className="hover:text-yellow-500">Home</a>
             <a href="#modifications" className="hover:text-yellow-500">Modifications</a>
             <a href="#gallery" className="hover:text-yellow-500">Gallery</a>
-            <a href="/profile" className="hover:text-yellow-500">Profile</a>            
+            <a href="/profile" className="hover:text-yellow-500">Profile</a>
             <a href="#ar-view" className="hover:text-yellow-500">AR View</a>
             <a href="/Log-Contacts" className="hover:text-yellow-500">Contact</a>
 
-             <button
-                onClick={handleLogout}
-                className="
-                  ml-10 px-5 py-2.5 font-poppins text-white font-semibold
-                  border border-red-500 rounded-xl 
-                  backdrop-blur-md bg-red-600/20
-                  hover:bg-red-600 hover:shadow-red-500/50
-                  hover:shadow-lg hover:-translate-y-0.5
-                  transition-all duration-300
-                "
+            {/* Avatar Dropdown */}
+            <div className="relative dropdown-container">
+
+              {/* Avatar Button */}
+              <button
+                onClick={() => setMoreOpen(!moreOpen)}
+                className="w-10 h-10 flex items-center justify-center bg-yellow-500 text-black font-bold rounded-full 
+                            hover:bg-yellow-400 transition"
               >
-                Logout
+                {user?.fullName ? user.fullName.charAt(0).toUpperCase() : "U"}
               </button>
+
+              {/* Dropdown */}
+              {moreOpen && (
+                <div className="absolute right-0 mt-5 w-52 bg-black bg-opacity-90 backdrop-blur-md 
+                                border border-gray-700 rounded-2xl shadow-lg p-4 z-50">
+
+                  {/* User Full Name Display */}
+                  <div className="border-b border-gray-700 pb-3 mb-3">
+                   
+                    <p className="text-yellow-500 font-semibold truncate">
+                      {user?.fullName || "User"}
+                    </p>
+                  </div>
+                  
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-left px-3 py-2 rounded-lg bg-red-600 hover:bg-red-700 
+                              text-white transition"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
 
           </div>
         </div>
       </nav>
+
 
       {/* Hero Section */}
       <section className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4">
