@@ -1,7 +1,8 @@
-//profile.jsx
-
 import { useEffect, useState } from "react";
 import BGIMG from "../assets/back2.jpg";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";  
+
 
 type User = {
   id: string;
@@ -20,6 +21,9 @@ const Profile: React.FC = () => {
   const [formData, setFormData] = useState<Partial<User>>({});
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
+    const navigate = useNavigate();
+
 
   useEffect(() => {
     try {
@@ -41,6 +45,12 @@ const Profile: React.FC = () => {
       [name]: value
     }));
   };
+
+  const handleLogout = () => {
+  localStorage.removeItem("user");
+  navigate("/");
+};
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -153,19 +163,56 @@ const Profile: React.FC = () => {
       <div className="fixed inset-0 bg-black bg-opacity-40" />
 
       {/* Navigation */}
-      <nav className="relative bg-black bg-opacity-70 text-white p-4 z-10">
+      <nav className="relative bg-black bg-opacity-70 text-white p-4 z-50">
         <div className="container mx-auto flex justify-between items-center">
           <div className="text-3xl font-bold font-pncb text-yellow-500 tracking-wider">
             ModiFyX
           </div>
-          <div className="space-x-6">
+          <div className="relative flex items-center gap-6">
+
             <a href="/Home" className="hover:text-yellow-500">Home</a>
             <a href="/profile" className="hover:text-yellow-500">Profile</a>
             <a href="#modifications" className="hover:text-yellow-500">Modifications</a>
             <a href="#gallery" className="hover:text-yellow-500">Gallery</a>
             <a href="#ar-view" className="hover:text-yellow-500">AR View</a>
             <a href="/Log-Contacts" className="hover:text-yellow-500">Contact</a>
-          </div>
+
+              {/* Avatar Dropdown */}
+              <div className="relative z-50">
+
+                {/* Avatar Circle */}
+                <button
+                  onClick={() => setMoreOpen(!moreOpen)}
+                  className="w-10 h-10 flex items-center justify-center bg-yellow-500 text-black font-bold rounded-full 
+                            hover:bg-yellow-400 transition"
+                >
+                  {user?.fullName?.charAt(0).toUpperCase()}
+                </button>
+
+                {/* Dropdown Menu */}
+                {moreOpen && (
+                  <div className="absolute right-0 mt-3 w-52 bg-black bg-opacity-90 backdrop-blur-md 
+                                  border border-gray-700 rounded-2xl shadow-lg p-4 transition-all z-50">
+
+                    <p className="text-yellow-500 font-semibold border-b border-gray-700 pb-2">
+                      {user.fullName}
+                    </p>
+
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left mt-3 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 
+                                text-white transition"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+
+
+
+            </div>
+
         </div>
       </nav>
 
