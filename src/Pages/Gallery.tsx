@@ -283,6 +283,7 @@ const Gallery: React.FC = () => {
   const [moreOpen, setMoreOpen] = useState(false)
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const userData = localStorage.getItem("user");
@@ -336,64 +337,178 @@ const Gallery: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-black text-white font-poppins">
+    <div className="fixed bg-black inset-0 h-screen w-screen overflow-y-auto">
       {/* Navigation */}
       <nav className="relative bg-black bg-opacity-70 text-white p-4 z-50">
-        <div className="container mx-auto flex justify-between items-center">
-          
-          {/* Logo */}
-          <div className="text-3xl font-bold font-pncb text-yellow-500 tracking-wider">
-            ModiFyX
-          </div>
+          <div className="container mx-auto flex justify-between items-center">
+            
+            {/* Logo */}
+            <div className="text-xl sm:text-2xl md:text-3xl font-bold font-pncb text-yellow-500 tracking-wider">
+              ModiFyX
+            </div>
 
-          {/* Links + Avatar */}
-          <div className="flex items-center gap-10">
+            {/* Mobile Menu Button */}
+            <div className="md:hidden flex items-center gap-4">
+              {/* Avatar Button for Mobile */}
+              <div className="relative">
+                <button
+                  onClick={() => setMoreOpen(!moreOpen)}
+                  className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-yellow-500 text-black font-bold rounded-full 
+                              hover:bg-yellow-400 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
+                >
+                  {user?.fullName ? user.fullName.charAt(0).toUpperCase() : "U"}
+                </button>
 
-            <a href="/Home" className="hover:text-yellow-500 transition-colors duration-300">Home</a>
-            <a href="/Home#modifications" className="hover:text-yellow-500 transition-colors duration-300">Modifications</a>
-            <a href="/ModiFyX-Gallery" className="text-yellow-500 font-semibold">Gallery</a>
-            <a href="/profile" className="hover:text-yellow-500 transition-colors duration-300">Profile</a>
-            <a href="/Home#ar-view" className="hover:text-yellow-500 transition-colors duration-300">AR View</a>
-            <a href="/Log-Contacts" className="hover:text-yellow-500 transition-colors duration-300">Contact</a>
-
-            {/* Avatar Dropdown */}
-            <div className="relative dropdown-container">
-
-              {/* Avatar Button */}
-              <button
-                onClick={() => setMoreOpen(!moreOpen)}
-                className="w-10 h-10 flex items-center justify-center bg-yellow-500 text-black font-bold rounded-full 
-                            hover:bg-yellow-400 transition-all duration-300 transform hover:scale-105"
-              >
-                {user?.fullName ? user.fullName.charAt(0).toUpperCase() : "U"}
-              </button>
-
-              {/* Dropdown */}
-              {moreOpen && (
-                <div className="absolute right-0 mt-3 w-52 bg-black bg-opacity-90 backdrop-blur-md 
-                                border border-gray-700 rounded-2xl shadow-lg p-4 z-50">
-
-                  {/* User Full Name Display */}
-                  <div className="border-b border-gray-700 pb-3 mb-3">
-                    <p className="text-yellow-500 font-semibold truncate">
-                      {user?.fullName || "User"}
-                    </p>
+                {/* Dropdown for Mobile */}
+                {moreOpen && (
+                  <div className="absolute right-0 mt-3 w-48 bg-black bg-opacity-95 backdrop-blur-md 
+                                  border border-gray-700 rounded-2xl shadow-lg p-4 z-50">
+                    <div className="border-b border-gray-700 pb-3 mb-3">
+                      <p className="text-yellow-500 font-semibold truncate text-sm">
+                        {user?.fullName || "User"}
+                      </p>
+                    </div>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-3 py-2 rounded-lg bg-red-600 hover:bg-red-700 
+                                text-white transition text-sm"
+                    >
+                      Logout
+                    </button>
                   </div>
+                )}
+              </div>
+
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors duration-300"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {mobileMenuOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+              </button>
+            </div>
+
+            {/* Desktop Navigation Links + Avatar */}
+            <div className="hidden md:flex items-center gap-6 lg:gap-10">
+              <a href="/Home" className="hover:text-yellow-500 transition-colors duration-300 text-sm lg:text-base">Home</a>
+              <a href="/Home#modifications" className="hover:text-yellow-500 transition-colors duration-300 text-sm lg:text-base">Modifications</a>
+              <a href="/ModiFyX-Gallery" className="text-yellow-500 font-semibold text-sm lg:text-base">Gallery</a>
+              <a href="/profile" className="hover:text-yellow-500 transition-colors duration-300 text-sm lg:text-base">Profile</a>
+              <a href="/Home#ar-view" className="hover:text-yellow-500 transition-colors duration-300 text-sm lg:text-base">AR View</a>
+              <a href="/Log-Contacts" className="hover:text-yellow-500 transition-colors duration-300 text-sm lg:text-base">Contact</a>
+
+              {/* Avatar Dropdown for Desktop */}
+              <div className="relative dropdown-container">
+                <button
+                  onClick={() => setMoreOpen(!moreOpen)}
+                  className="w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center bg-yellow-500 text-black font-bold rounded-full 
+                              hover:bg-yellow-400 transition-all duration-300 transform hover:scale-105 text-sm lg:text-base"
+                >
+                  {user?.fullName ? user.fullName.charAt(0).toUpperCase() : "U"}
+                </button>
+
+                {moreOpen && (
+                  <div className="absolute right-0 mt-3 w-52 bg-black bg-opacity-90 backdrop-blur-md 
+                                  border border-gray-700 rounded-2xl shadow-lg p-4 z-50">
+                    <div className="border-b border-gray-700 pb-3 mb-3">
+                      <p className="text-yellow-500 font-semibold truncate">
+                        {user?.fullName || "User"}
+                      </p>
+                    </div>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-3 py-2 rounded-lg bg-red-600 hover:bg-red-700 
+                                text-white transition"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Mobile Menu Overlay */}
+            {mobileMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 100 }}
+                className="fixed inset-0 bg-black bg-opacity-95 z-40 md:hidden"
+              >
+                <div className="flex flex-col items-center justify-center h-full space-y-8">
+                  <a
+                    href="/Home"
+                    className="text-2xl text-white hover:text-yellow-500 transition-colors duration-300"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Home
+                  </a>
+                  <a
+                    href="/Home#modifications"
+                    className="text-2xl text-white hover:text-yellow-500 transition-colors duration-300"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Modifications
+                  </a>
+                  <a
+                    href="/ModiFyX-Gallery"
+                    className="text-2xl text-yellow-500 font-semibold"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Gallery
+                  </a>
+                  <a
+                    href="/profile"
+                    className="text-2xl text-white hover:text-yellow-500 transition-colors duration-300"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Profile
+                  </a>
+                  <a
+                    href="/Home#ar-view"
+                    className="text-2xl text-white hover:text-yellow-500 transition-colors duration-300"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    AR View
+                  </a>
+                  <a
+                    href="/Log-Contacts"
+                    className="text-2xl text-white hover:text-yellow-500 transition-colors duration-300"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Contact
+                  </a>
                   
+                  {/* Mobile Logout Button */}
                   <button
-                    onClick={handleLogout}
-                    className="w-full text-left px-3 py-2 rounded-lg bg-red-600 hover:bg-red-700 
-                              text-white transition"
+                    onClick={() => {
+                      handleLogout();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="mt-8 px-6 py-3 rounded-lg bg-red-600 hover:bg-red-700 text-white transition text-lg"
                   >
                     Logout
                   </button>
-                </div>
-              )}
-              </div>
 
+                  {/* Close Button */}
+                  <button
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="absolute top-6 right-6 p-2 text-white hover:text-yellow-500"
+                  >
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              </motion.div>
+            )}
           </div>
-        </div>
-      </nav>
+        </nav>
 
       {/* Main Content */}
       <div className="px-4 py-8">
