@@ -1,5 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react'
 import { motion } from 'framer-motion';
+import BGIMG from "../assets/back2.jpg";
+
 import { useNavigate } from "react-router-dom"; 
 import allo1 from "../assets/allo1.jpg";
 import allo2 from "../assets/allo2.jpg";
@@ -282,8 +284,9 @@ const Gallery: React.FC = () => {
   const [sortBy, setSortBy] = useState<'name' | 'price' | 'rate'>('name')
   const [moreOpen, setMoreOpen] = useState(false)
   const [user, setUser] = useState<User | null>(null);
-  const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userData = localStorage.getItem("user");
@@ -327,7 +330,11 @@ const Gallery: React.FC = () => {
 
   const handleViewDetails = (item: GalleryItem) => {
     console.log('Viewing details for:', item.name)
-    // You can add navigation to detail page here if needed
+    setShowPopup(true);
+  }
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
   }
 
   const handleLogout = () => {
@@ -336,194 +343,174 @@ const Gallery: React.FC = () => {
     navigate("/");
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('.dropdown-container')) {
+        setMoreOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="fixed bg-black inset-0 h-screen w-screen overflow-y-auto">
-      {/* Navigation */}
-      <nav className="relative bg-black bg-opacity-70 text-white p-4 z-50">
-          <div className="container mx-auto flex justify-between items-center">
-            
-            {/* Logo */}
-            <div className="text-xl sm:text-2xl md:text-3xl font-bold font-pncb text-yellow-500 tracking-wider">
-              ModiFyX
-            </div>
+    <div className="min-h-screen fixed inset-0 bg-black text-white overflow-x-hidden">
+      
+      {/* Background Image */}
+      <div
+        className="fixed inset-0 bg-cover bg-center opacity-40"
+        style={{ backgroundImage: `url(${BGIMG})` }}
+      />
+      <div className="fixed inset-0 bg-black bg-opacity-40" />
 
-            {/* Mobile Menu Button */}
-            <div className="md:hidden flex items-center gap-4">
-              {/* Avatar Button for Mobile */}
-              <div className="relative">
-                <button
-                  onClick={() => setMoreOpen(!moreOpen)}
-                  className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-yellow-500 text-black font-bold rounded-full 
-                              hover:bg-yellow-400 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
-                >
-                  {user?.fullName ? user.fullName.charAt(0).toUpperCase() : "U"}
-                </button>
-
-                {/* Dropdown for Mobile */}
-                {moreOpen && (
-                  <div className="absolute right-0 mt-3 w-48 bg-black bg-opacity-95 backdrop-blur-md 
-                                  border border-gray-700 rounded-2xl shadow-lg p-4 z-50">
-                    <div className="border-b border-gray-700 pb-3 mb-3">
-                      <p className="text-yellow-500 font-semibold truncate text-sm">
-                        {user?.fullName || "User"}
-                      </p>
-                    </div>
-                    <button
-                      onClick={handleLogout}
-                      className="w-full text-left px-3 py-2 rounded-lg bg-red-600 hover:bg-red-700 
-                                text-white transition text-sm"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                )}
-              </div>
-
+      {/* Popup Modal */}
+      {showPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-gray-900 rounded-2xl p-6 max-w-sm w-3/4 mx-auto border border-yellow-500/30"
+          >
+            <div className="text-center">
+              <div className="text-4xl mb-4">🚀</div>
+              <h3 className="text-xl font-bold text-yellow-400 mb-3">
+                Coming Soon!
+              </h3>
+              <p className="text-gray-300 mb-6">
+                The app will launch in Jan 2026. This feature will be unlocked when the app launches.
+              </p>
               <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors duration-300"
+                onClick={handleClosePopup}
+                className="bg-yellow-500 text-black font-bold py-3 px-6 rounded-xl hover:bg-yellow-600 transition-colors duration-300 w-full"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  {mobileMenuOpen ? (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  ) : (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  )}
-                </svg>
+                Got It
               </button>
             </div>
+          </motion.div>
+        </div>
+      )}
 
-            {/* Desktop Navigation Links + Avatar */}
-            <div className="hidden md:flex items-center gap-6 lg:gap-10">
-              <a href="/Home" className="hover:text-yellow-500 transition-colors duration-300 text-sm lg:text-base">Home</a>
-              <a href="/Home#modifications" className="hover:text-yellow-500 transition-colors duration-300 text-sm lg:text-base">Modifications</a>
-              <a href="/ModiFyX-Gallery" className="text-yellow-500 font-semibold text-sm lg:text-base">Gallery</a>
-              <a href="/profile" className="hover:text-yellow-500 transition-colors duration-300 text-sm lg:text-base">Profile</a>
-              <a href="/Home#ar-view" className="hover:text-yellow-500 transition-colors duration-300 text-sm lg:text-base">AR View</a>
-              <a href="/Log-Contacts" className="hover:text-yellow-500 transition-colors duration-300 text-sm lg:text-base">Contact</a>
+      {/* Navigation */}
+      <nav className="relative bg-black bg-opacity-70 text-white p-4 z-40 backdrop-blur-md">
+        <div className="container mx-auto flex justify-between items-center">
+          
+          {/* Logo */}
+          <div className="text-2xl lg:text-3xl font-bold font-pncb text-yellow-500 tracking-wider">
+            ModiFyX
+          </div>
 
-              {/* Avatar Dropdown for Desktop */}
-              <div className="relative dropdown-container">
-                <button
-                  onClick={() => setMoreOpen(!moreOpen)}
-                  className="w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center bg-yellow-500 text-black font-bold rounded-full 
-                              hover:bg-yellow-400 transition-all duration-300 transform hover:scale-105 text-sm lg:text-base"
-                >
-                  {user?.fullName ? user.fullName.charAt(0).toUpperCase() : "U"}
-                </button>
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center gap-8">
+            <a href="/Home" className="hover:text-yellow-500 transition-colors duration-300">Home</a>
+            <a href="/Home#modifications" className="hover:text-yellow-500 transition-colors duration-300">Modifications</a>
+            <a href="/ModiFyX-Gallery" className="text-yellow-500 font-semibold">Gallery</a>
+            <a href="/profile" className="hover:text-yellow-500 transition-colors duration-300">Profile</a>
+            <a href="/Home#ar-view" className="hover:text-yellow-500 transition-colors duration-300">AR View</a>
+            <a href="/Log-Contacts" className="hover:text-yellow-500 transition-colors duration-300">Contact</a>
 
-                {moreOpen && (
-                  <div className="absolute right-0 mt-3 w-52 bg-black bg-opacity-90 backdrop-blur-md 
-                                  border border-gray-700 rounded-2xl shadow-lg p-4 z-50">
-                    <div className="border-b border-gray-700 pb-3 mb-3">
-                      <p className="text-yellow-500 font-semibold truncate">
-                        {user?.fullName || "User"}
-                      </p>
-                    </div>
-                    <button
-                      onClick={handleLogout}
-                      className="w-full text-left px-3 py-2 rounded-lg bg-red-600 hover:bg-red-700 
-                                text-white transition"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Mobile Menu Overlay */}
-            {mobileMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0, x: 100 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 100 }}
-                className="fixed inset-0 bg-black bg-opacity-95 z-40 md:hidden"
+            {/* Avatar Dropdown */}
+            <div className="relative dropdown-container">
+              <button
+                onClick={() => setMoreOpen(!moreOpen)}
+                className="w-10 h-10 flex items-center justify-center bg-yellow-500 text-black font-bold rounded-full 
+                            hover:bg-yellow-400 transition-all duration-300 transform hover:scale-105"
               >
-                <div className="flex flex-col items-center justify-center h-full space-y-8">
-                  <a
-                    href="/Home"
-                    className="text-2xl text-white hover:text-yellow-500 transition-colors duration-300"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Home
-                  </a>
-                  <a
-                    href="/Home#modifications"
-                    className="text-2xl text-white hover:text-yellow-500 transition-colors duration-300"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Modifications
-                  </a>
-                  <a
-                    href="/ModiFyX-Gallery"
-                    className="text-2xl text-yellow-500 font-semibold"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Gallery
-                  </a>
-                  <a
-                    href="/profile"
-                    className="text-2xl text-white hover:text-yellow-500 transition-colors duration-300"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Profile
-                  </a>
-                  <a
-                    href="/Home#ar-view"
-                    className="text-2xl text-white hover:text-yellow-500 transition-colors duration-300"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    AR View
-                  </a>
-                  <a
-                    href="/Log-Contacts"
-                    className="text-2xl text-white hover:text-yellow-500 transition-colors duration-300"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Contact
-                  </a>
+                {user?.fullName ? user.fullName.charAt(0).toUpperCase() : "U"}
+              </button>
+
+              {moreOpen && (
+                <div className="absolute right-0 mt-3 w-52 bg-black bg-opacity-90 backdrop-blur-md 
+                                border border-gray-700 rounded-2xl shadow-lg p-4 z-50">
+                  <div className="border-b border-gray-700 pb-3 mb-3">
+                    <p className="text-yellow-500 font-semibold truncate">
+                      {user?.fullName || "User"}
+                    </p>
+                  </div>
                   
-                  {/* Mobile Logout Button */}
                   <button
-                    onClick={() => {
-                      handleLogout();
-                      setMobileMenuOpen(false);
-                    }}
-                    className="mt-8 px-6 py-3 rounded-lg bg-red-600 hover:bg-red-700 text-white transition text-lg"
+                    onClick={handleLogout}
+                    className="w-full text-left px-3 py-2 rounded-lg bg-red-600 hover:bg-red-700 
+                              text-white transition"
                   >
                     Logout
                   </button>
-
-                  {/* Close Button */}
-                  <button
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="absolute top-6 right-6 p-2 text-white hover:text-yellow-500"
-                  >
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
                 </div>
-              </motion.div>
-            )}
+              )}
+            </div>
           </div>
-        </nav>
+
+          {/* Mobile Menu Button */}
+          <div className="lg:hidden flex items-center gap-4">
+            {/* Avatar for mobile */}
+            <div className="relative dropdown-container">
+              <button
+                onClick={() => setMoreOpen(!moreOpen)}
+                className="w-10 h-10 flex items-center justify-center bg-yellow-500 text-black font-bold rounded-full 
+                            hover:bg-yellow-400 transition-all duration-300 transform hover:scale-105"
+              >
+                {user?.fullName ? user.fullName.charAt(0).toUpperCase() : "U"}
+              </button>
+            </div>
+
+            <button 
+              className="text-white text-2xl"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? "✕" : "☰"}
+            </button>
+          </div>
+        </div>
+
+        {mobileMenuOpen && (
+          <div className="lg:hidden bg-black bg-opacity-90 mt-4 rounded-lg p-4">
+            <div className="flex flex-col space-y-4">
+              <a href="/Home" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setMobileMenuOpen(false)}>Home</a>
+              <a href="/Home#modifications" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setMobileMenuOpen(false)}>Modifications</a>
+              <a href="/ModiFyX-Gallery" className="text-yellow-500 font-semibold py-2" onClick={() => setMobileMenuOpen(false)}>Gallery</a>
+              <a href="/profile" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setMobileMenuOpen(false)}>Profile</a>
+              <a href="/Home#ar-view" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setMobileMenuOpen(false)}>AR View</a>
+              <a href="/Log-Contacts" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setMobileMenuOpen(false)}>Contact</a>
+            </div>
+          </div>
+        )}
+      </nav>
+
+      {moreOpen && (
+        <div className="lg:hidden fixed top-20 right-4 w-48 bg-black bg-opacity-90 backdrop-blur-md 
+                        border border-gray-700 rounded-2xl shadow-lg p-4 z-50 dropdown-container">
+          <div className="border-b border-gray-700 pb-3 mb-3">
+            <p className="text-yellow-500 font-semibold truncate">
+              {user?.fullName || "User"}
+            </p>
+          </div>
+          <button
+            onClick={handleLogout}
+            className="w-full text-left px-3 py-2 rounded-lg bg-red-600 hover:bg-red-700 
+                      text-white transition"
+          >
+            Logout
+          </button>
+        </div>
+      )}
 
       {/* Main Content */}
-      <div className="px-4 py-8">
+      <div className="relative z-10 px-4 py-8">
         <div className="max-w-7xl mx-auto">
           {/* Header Section */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-12"
+            className="text-center mb-8 lg:mb-12"
           >
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent mb-4">
+            <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent mb-4">
               Modification Gallery
             </h1>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-gray-400 text-base lg:text-lg max-w-2xl mx-auto">
               Discover premium automotive modifications to enhance your vehicle's performance and style
             </p>
           </motion.div>
@@ -533,17 +520,17 @@ const Gallery: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mb-8 space-y-4"
+            className="mb-6 lg:mb-8 space-y-4"
           >
             {/* Search Bar */}
-            <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
-              <div className="relative w-full md:w-auto flex-1 max-w-2xl">
+            <div className="flex flex-col lg:flex-row gap-4 justify-between items-center">
+              <div className="relative w-full lg:flex-1 lg:max-w-2xl">
                 <input
                   type="text"
                   placeholder="Search modifications..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full px-6 py-3 bg-gray-900 border border-gray-700 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-300"
+                  className="w-full px-4 lg:px-6 py-3 bg-gray-900 border border-gray-700 rounded-xl lg:rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-300 text-sm lg:text-base"
                 />
                 <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
                   🔍
@@ -554,7 +541,7 @@ const Gallery: React.FC = () => {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as 'name' | 'price' | 'rate')}
-                className="px-4 py-3 bg-gray-900 border border-gray-700 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-300"
+                className="w-full lg:w-auto px-4 py-3 bg-gray-900 border border-gray-700 rounded-xl lg:rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-300 text-sm lg:text-base"
               >
                 <option value="name">Sort by Name</option>
                 <option value="price">Sort by Price</option>
@@ -568,7 +555,7 @@ const Gallery: React.FC = () => {
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-4 py-2 rounded-xl font-medium capitalize transition-all duration-300 ${
+                  className={`px-3 lg:px-4 py-2 rounded-lg lg:rounded-xl font-medium capitalize transition-all duration-300 text-sm lg:text-base ${
                     selectedCategory === category
                       ? 'bg-yellow-500 text-black'
                       : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
@@ -585,9 +572,9 @@ const Gallery: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mb-6"
+            className="mb-4 lg:mb-6"
           >
-            <p className="text-gray-400">
+            <p className="text-gray-400 text-sm lg:text-base">
               Showing {filteredItems.length} of {items.length} products
             </p>
           </motion.div>
@@ -595,7 +582,7 @@ const Gallery: React.FC = () => {
           {/* Products Grid */}
           <motion.div
             layout
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6"
           >
             {filteredItems.map((item, index) => (
               <motion.div
@@ -606,40 +593,40 @@ const Gallery: React.FC = () => {
                 whileHover={{ y: -5, transition: { duration: 0.2 } }}
                 className="group"
               >
-                <div className="bg-gray-900 rounded-2xl overflow-hidden border border-gray-800 shadow-2xl transition-all duration-300 group-hover:shadow-yellow-500/10 group-hover:border-yellow-500/30">
+                <div className="bg-gray-900 rounded-xl lg:rounded-2xl overflow-hidden border border-gray-800 shadow-lg lg:shadow-2xl transition-all duration-300 group-hover:shadow-yellow-500/10 group-hover:border-yellow-500/30">
                   {/* Image Container */}
                   <div className="relative overflow-hidden">
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-40 lg:h-48 object-cover transition-transform duration-500 group-hover:scale-110"
                     />
-                    <div className="absolute top-3 right-3 bg-black/80 backdrop-blur-sm px-2 py-1 rounded-full text-yellow-400 text-sm font-semibold">
+                    <div className="absolute top-2 lg:top-3 right-2 lg:right-3 bg-black/80 backdrop-blur-sm px-2 py-1 rounded-full text-yellow-400 text-xs lg:text-sm font-semibold">
                       ⭐ {item.rate}
                     </div>
-                    <div className="absolute top-3 left-3 bg-gradient-to-r from-yellow-500 to-orange-500 text-black text-xs font-bold px-2 py-1 rounded-full">
+                    <div className="absolute top-2 lg:top-3 left-2 lg:left-3 bg-gradient-to-r from-yellow-500 to-orange-500 text-black text-xs font-bold px-2 py-1 rounded-full">
                       {item.category.toUpperCase()}
                     </div>
                   </div>
 
                   {/* Content */}
-                  <div className="p-5">
-                    <h3 className="text-xl font-bold mb-2 text-white group-hover:text-yellow-400 transition-colors duration-300">
+                  <div className="p-4 lg:p-5">
+                    <h3 className="text-lg lg:text-xl font-bold mb-2 text-white group-hover:text-yellow-400 transition-colors duration-300 line-clamp-2">
                       {item.name}
                     </h3>
-                    <p className="text-gray-400 text-sm mb-4 line-clamp-2">
+                    <p className="text-gray-400 text-xs lg:text-sm mb-3 lg:mb-4 line-clamp-2">
                       {item.description}
                     </p>
 
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-2xl font-bold text-green-400">
+                    <div className="flex items-center justify-between mb-3 lg:mb-4">
+                      <span className="text-lg lg:text-2xl font-bold text-green-400">
                         {formatPrice(item.price)}
                       </span>
                     </div>
 
                     <button
                       onClick={() => handleViewDetails(item)}
-                      className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold py-3 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-yellow-500/25"
+                      className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold py-2 lg:py-3 rounded-lg lg:rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-yellow-500/25 text-sm lg:text-base"
                     >
                       View Details
                     </button>
@@ -655,13 +642,13 @@ const Gallery: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6 }}
-              className="text-center py-16"
+              className="text-center py-12 lg:py-16"
             >
-              <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-2xl font-bold text-gray-300 mb-2">
+              <div className="text-4xl lg:text-6xl mb-4">🔍</div>
+              <h3 className="text-xl lg:text-2xl font-bold text-gray-300 mb-2">
                 No products found
               </h3>
-              <p className="text-gray-500">
+              <p className="text-gray-500 text-sm lg:text-base">
                 Try adjusting your search or filter criteria
               </p>
             </motion.div>
