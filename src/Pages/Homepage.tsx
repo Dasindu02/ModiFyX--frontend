@@ -245,7 +245,7 @@ const createExplosionParticles = (container: HTMLElement, left: number, top: num
 
             <a href="/Home" className="hover:text-yellow-500">Home</a>
             <a href="#modifications" className="hover:text-yellow-500">Modifications</a>
-            <a href="#gallery" className="hover:text-yellow-500">Gallery</a>
+            <a href="/ModiFyX-Gallery" className="hover:text-yellow-500">Gallery</a>
             <a href="/profile" className="hover:text-yellow-500">Profile</a>
             <a href="#ar-view" className="hover:text-yellow-500">AR View</a>
             <a href="/Log-Contacts" className="hover:text-yellow-500">Contact</a>
