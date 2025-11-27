@@ -240,7 +240,6 @@ const createExplosionParticles = (container: HTMLElement, left: number, top: num
             ModiFyX
           </div>
 
-          {/* Links + Avatar */}
           <div className="flex items-center gap-10">
 
             <a href="/Home" className="text-yellow-500 font-semibold">Home</a>
@@ -250,10 +249,8 @@ const createExplosionParticles = (container: HTMLElement, left: number, top: num
             <a href="#ar-view" className="hover:text-yellow-500">AR View</a>
             <a href="/Log-Contacts" className="hover:text-yellow-500">Contact</a>
 
-            {/* Avatar Dropdown */}
             <div className="relative dropdown-container">
 
-              {/* Avatar Button */}
               <button
                 onClick={() => setMoreOpen(!moreOpen)}
                 className="w-10 h-10 flex items-center justify-center bg-yellow-500 text-black font-bold rounded-full 
@@ -267,7 +264,6 @@ const createExplosionParticles = (container: HTMLElement, left: number, top: num
                 <div className="absolute right-0 mt-5 w-52 bg-black bg-opacity-90 backdrop-blur-md 
                                 border border-gray-700 rounded-2xl shadow-lg p-4 z-50">
 
-                  {/* User Full Name Display */}
                   <div className="border-b border-gray-700 pb-3 mb-3">
                    
                     <p className="text-yellow-500 font-semibold truncate">
