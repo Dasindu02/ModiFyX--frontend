@@ -42,9 +42,9 @@ function App() {
 
 
 
-         <Route path="/access-denied" element={ <ProtectedRoute>
+         <Route path="/access-denied" element={ 
               <AccessDenied />
-            </ProtectedRoute>} 
+            } 
             />
 
 
@@ -76,6 +76,7 @@ function App() {
           }
         />
 
+        <Route path="*" element={<Navigate to="/Login" replace />} />
       </Routes>
     </BrowserRouter>
   );
