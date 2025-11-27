@@ -105,7 +105,7 @@ export default function LogContact() {
             <a href="/ModiFyX-Gallery" className="hover:text-yellow-500">Gallery</a>
             <a href="/profile" className="hover:text-yellow-500">Profile</a>
             <a href="/Home#ar-view" className="hover:text-yellow-500">AR View</a>
-            <a href="/Log-Contacts" className="hover:text-yellow-500">Contact</a>
+            <a href="/Log-Contacts" className="text-yellow-500 font-semibold">Contact</a>
 
             {/* Avatar Dropdown */}
             <div className="relative dropdown-container">

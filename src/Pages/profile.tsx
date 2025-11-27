@@ -173,7 +173,7 @@ const Profile: React.FC = () => {
             <a href="/Home" className="hover:text-yellow-500">Home</a>
             <a href="/Home#modifications" className="hover:text-yellow-500">Modifications</a>
             <a href="/ModiFyX-Gallery" className="hover:text-yellow-500">Gallery</a>
-            <a href="/profile" className="hover:text-yellow-500">Profile</a>
+            <a href="/profile" className="text-yellow-500 font-semibold">Profile</a>
             <a href="/Home#ar-view" className="hover:text-yellow-500">AR View</a>
             <a href="/Log-Contacts" className="hover:text-yellow-500">Contact</a>
 

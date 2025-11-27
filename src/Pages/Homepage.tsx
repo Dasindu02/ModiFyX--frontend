@@ -243,7 +243,7 @@ const createExplosionParticles = (container: HTMLElement, left: number, top: num
           {/* Links + Avatar */}
           <div className="flex items-center gap-10">
 
-            <a href="/Home" className="hover:text-yellow-500">Home</a>
+            <a href="/Home" className="text-yellow-500 font-semibold">Home</a>
             <a href="#modifications" className="hover:text-yellow-500">Modifications</a>
             <a href="/ModiFyX-Gallery" className="hover:text-yellow-500">Gallery</a>
             <a href="/profile" className="hover:text-yellow-500">Profile</a>
