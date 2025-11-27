@@ -379,9 +379,12 @@ const createExplosionParticles = (container: HTMLElement, left: number, top: num
                 </div>
               )}
 
-          <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-black transition duration-300">
+        <a 
+            href="/ModiFyX-Gallery"
+            className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-black transition duration-300 inline-block text-center"
+          >
             View Gallery
-          </button>
+          </a>
           {/* <button
     onClick={handleLogout}
     className="ml-4 px-4 py-2 border border-red-500 text-red-500 rounded-lg 
