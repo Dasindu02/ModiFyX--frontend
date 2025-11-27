@@ -501,7 +501,7 @@ const Home: React.FC = () => {
               
               {showARPopup && (
                 <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-[9999] p-4">
-                  <div className="bg-white text-black p-6 rounded-xl shadow-xl w-full max-w-sm text-center">
+                  <div className="bg-gray-500 text-white p-6 rounded-xl shadow-xl w-full max-w-sm text-center">
                     <h2 className="text-xl font-bold mb-3">Coming Soon 🚧</h2>
                     <p className="text-gray-700 mb-5 leading-relaxed text-sm lg:text-base">
                       The ModiFyX AR App is not launched yet.
