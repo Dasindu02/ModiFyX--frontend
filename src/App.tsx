@@ -10,6 +10,7 @@ import Home from "./Pages/Homepage";
 import LogContact from "./Pages/Logcontacts";
 import Profile from "./Pages/profile";
 import Technologies from "./Pages/Technologies";
+import Gallery from "./Pages/Gallery";
 
 // import ProtectedRoute from "./Routes/ProtectedRoute";
 // import { AuthProvider } from "./context/AuthContext";
@@ -23,6 +24,7 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/Contact" element={<Contact />} />
             <Route path="/ModiFyX-Technologies" element={<Technologies />} />
+            <Route path="/ModiFyX-Gallery" element={<Gallery />} />
 
 
           {/* Protected */}
