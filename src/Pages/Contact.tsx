@@ -10,6 +10,8 @@ export default function Contact() {
   const [isSending, setIsSending] = useState(false);
   const [messageSent, setMessageSent] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const formRef2 = useRef<HTMLFormElement>(null);
+
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -31,6 +33,38 @@ export default function Contact() {
 
       setMessageSent(true);
       formRef.current.reset();
+      
+      // Hide success message after 5 second
+      setTimeout(() => setMessageSent(false), 6000);
+    } catch (error) {
+      console.error('Failed to send message:', error);
+      alert('Failed to send message. Please try again.');
+    } finally {
+      setIsSending(false);
+    }
+  };
+
+
+  const handleSubmit2 = async (e: FormEvent) => {
+    e.preventDefault();
+    
+    if (!formRef2.current) {
+      console.error('Form reference is null');
+      return;
+    }
+
+    setIsSending(true);
+
+    try {
+      await emailjs.sendForm(
+        'service_7dljqlj', // Serviceid
+        'template_ssjqa7u', // templateid
+        formRef2.current,
+        'R8ScU0lB5eGP5p4qu' //key
+      );
+
+      setMessageSent(true);
+      formRef2.current.reset();
       
       // Hide success message after 5 second
       setTimeout(() => setMessageSent(false), 6000);
@@ -173,7 +207,7 @@ export default function Contact() {
                 </motion.div>
               )}
 
-              <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <form ref={formRef2} onSubmit={handleSubmit2} className="flex flex-col gap-4">
                 <input
                   type="text"
                   name="user_name"
