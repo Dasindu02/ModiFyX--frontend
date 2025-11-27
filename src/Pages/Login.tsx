@@ -58,7 +58,7 @@ const Login: React.FC = () => {
           age: res.data.user.age,
           district: res.data.user.district,
           vehicleModel: res.data.user.vehicleModel,
-          registrationDate: res.data.user.registrationDate
+          registrationNo: res.data.user.registrationNo
         })
       );
 

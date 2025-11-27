@@ -13,7 +13,7 @@ type User = {
   age?: number;
   district?: string;
   vehicleModel?: string;
-  registrationDate?: string;
+  registrationNo?: string;
 };
 
 const Profile: React.FC = () => {
@@ -70,6 +70,8 @@ const Profile: React.FC = () => {
 
       const updateURL = `http://localhost:5000/api/auth/update-profile/${user.id}`;
       console.log("PUT URL:", updateURL);
+          console.log("🔍 registrationNo value:", formData.registrationNo);
+
 
       const response = await fetch(updateURL, {
         method: "PUT",
@@ -103,7 +105,7 @@ const Profile: React.FC = () => {
         age: result.user.age,
         district: result.user.district,
         vehicleModel: result.user.vehicleModel,
-        registrationDate: result.user.registrationDate
+        registrationNo: result.user.registrationNo 
       };
 
       localStorage.setItem("user", JSON.stringify(updatedUserData));
@@ -384,11 +386,11 @@ const Profile: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block text-white mb-1 text-sm">Registration Date</label>
+                    <label className="block text-white mb-1 text-sm">Registration No</label>
                     <input
-                      type="date"
-                      name="registrationDate"
-                      value={formData.registrationDate || ""}
+                      type="text"
+                      name="registrationNo"
+                      value={formData.registrationNo|| ""}
                       onChange={handleInputChange}
                       className="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-yellow-500 text-sm"
                     />
@@ -463,8 +465,8 @@ const Profile: React.FC = () => {
                       <p className="text-white">{user.vehicleModel || "Not provided"}</p>
                     </div>
                     <div>
-                      <span className="text-gray-400">Registration Date:</span>
-                      <p className="text-white">{user.registrationDate || "Not provided"}</p>
+                      <span className="text-gray-400">Registration No:</span>
+                      <p className="text-white">{user.registrationNo|| "Not provided"}</p>
                     </div>
                   </div>
                 </div>
@@ -619,11 +621,11 @@ const Profile: React.FC = () => {
                     </div>
 
                     <div>
-                      <label className="block text-white mb-2">Vehicle Registration Date</label>
+                      <label className="block text-white mb-2">Vehicle Registration No</label>
                       <input
-                        type="date"
-                        name="registrationDate"
-                        value={formData.registrationDate || ""}
+                        type="text"
+                        name="registrationNo"
+                        value={formData.registrationNo || ""}
                         onChange={handleInputChange}
                         className="w-full bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-yellow-500"
                       />
@@ -699,8 +701,8 @@ const Profile: React.FC = () => {
                       <p className="text-white">{user.vehicleModel || "Not provided"}</p>
                     </div>
                     <div>
-                      <span className="text-gray-400">Registration Date:</span>
-                      <p className="text-white">{user.registrationDate || "Not provided"}</p>
+                      <span className="text-gray-400">Registration No:</span>
+                      <p className="text-white">{user.registrationNo || "Not provided"}</p>
                     </div>
                   </div>
                 </div>
