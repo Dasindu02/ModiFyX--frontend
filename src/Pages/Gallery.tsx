@@ -1,7 +1,34 @@
-import React, { useState, useMemo,useEffect } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { motion } from 'framer-motion';
-import { useNavigate } from "react-router-dom";  
+import { useNavigate } from "react-router-dom"; 
+import allo1 from "../assets/allo1.jpg";
+import allo2 from "../assets/allo2.jpg";
+import allo3 from "../assets/allo4.jpg";
+import allo4 from "../assets/allo3.jpg";
+import allo5 from "../assets/allo5.jpg";
+import allo6 from "../assets/allo6.jpg";
+import allo7 from "../assets/allo7.jpg";
+import allo8 from "../assets/allo8.jpg";
+import allo9 from "../assets/allo9.jpg";
+import allo10 from "../assets/allo10.jpg";
 
+import hl1 from "../assets/hl1.jpg";
+import hl2 from "../assets/hl2.jpg";
+import hl3 from "../assets/hl3.jpg";
+import hl4 from "../assets/hl4.jpg";
+import hl5 from "../assets/hl5.jpg";
+
+import bd1 from "../assets/bd1.jpg";
+import bd2 from "../assets/bd2.jpg";
+import bd3 from "../assets/bd3.jpg";
+import bd4 from "../assets/bd4.jpg";
+import bd5 from "../assets/bd5.jpg";
+
+import spoiler1 from "../assets/spoiler1.jpg";
+import spoiler2 from "../assets/spoiler2.jpg";
+import spoiler3 from "../assets/spoiler3.jpg";
+import spoiler4 from "../assets/spoiler4.jpg";
+import spoiler5 from "../assets/spoiler5.jpg";
 
 interface GalleryItem {
   id: number
@@ -16,61 +43,232 @@ interface GalleryItem {
 const items: GalleryItem[] = [
   {
     id: 1,
-    name: "Body Kit",
-    description: "Premium aerodynamic body kit for sporty look",
+    name: "Sport Aero Body Kit",
+    description: "Premium aerodynamic body kit designed to enhance sporty exterior styling.",
     price: 85000,
     rate: 4.8,
-    image: "/assets/gallery/bodykit.jpg",
+    image: bd1,
     category: "exterior"
   },
   {
     id: 2,
-    name: "LED Headlights",
-    description: "High-brightness LED headlights with DRL",
-    price: 45000,
-    rate: 4.6,
-    image: "/assets/gallery/headlights.jpg",
-    category: "lighting"
+    name: "GT Line Body Kit",
+    description: "Aggressive GT-style body kit with enhanced front and rear bumpers.",
+    price: 30000,
+    rate: 4.7,
+    image: bd2,
+    category: "exterior"
   },
   {
     id: 3,
-    name: "Spoiler",
-    description: "Sport spoiler for improved aerodynamics",
-    price: 32000,
-    rate: 4.5,
-    image: "/assets/gallery/spoiler.jpg",
+    name: "Street Edition Body Kit",
+    description: "Lightweight street-inspired design with side skirts and lip extensions.",
+    price: 95000,
+    rate: 4.6,
+    image: bd3,
     category: "exterior"
   },
   {
     id: 4,
-    name: "Alloy Wheels",
-    description: "Lightweight premium alloy wheels",
-    price: 120000,
+    name: "Carbon Fiber Body Kit",
+    description: "High-performance carbon fiber styled kit for improved aerodynamics.",
+    price: 35000,
     rate: 4.9,
-    image: "/assets/gallery/alloy.jpg",
-    category: "wheels"
+    image: bd4,
+    category: "exterior"
   },
   {
     id: 5,
-    name: "Performance Exhaust",
-    description: "Stainless steel exhaust system for enhanced sound and performance",
-    price: 65000,
-    rate: 4.7,
-    image: "/assets/gallery/exhaust.jpg",
-    category: "performance"
+    name: "Urban Style Body Kit",
+    description: "Modern body kit with smooth curves and premium exterior detailing.",
+    price: 78000,
+    rate: 4.4,
+    image: bd5,
+    category: "exterior"
   },
   {
     id: 6,
-    name: "Coilover Suspension",
-    description: "Adjustable suspension kit for improved handling",
-    price: 95000,
+    name: "Premium LED Headlight",
+    description: "Ultra-bright LED headlight with crystal-clear projection.",
+    price: 42000,
+    rate: 4.5,
+    image: hl1,
+    category: "lighting"
+  },
+  {
+    id: 7,
+    name: "Matrix LED Headlight",
+    description: "Advanced matrix beam technology for excellent visibility.",
+    price: 55000,
+    rate: 4.7,
+    image: hl2,
+    category: "lighting"
+  },
+  {
+    id: 8,
+    name: "Projector LED Headlight",
+    description: "Sharp-cut projector LED system ideal for night driving.",
+    price: 48000,
+    rate: 4.6,
+    image: hl3,
+    category: "lighting"
+  },
+  {
+    id: 9,
+    name: "Bi-Xenon + LED Combo Headlights",
+    description: "Dual-beam performance headlights with LED DRL strip.",
+    price: 60000,
     rate: 4.8,
-    image: "/assets/gallery/suspension.jpg",
-    category: "suspension"
+    image: hl4,
+    category: "lighting"
+  },
+  {
+    id: 10,
+    name: "Full LED Headlight Assembly",
+    description: "Full assembly upgrade with high-intensity LED modules.",
+    price: 75000,
+    rate: 4.9,
+    image: hl5,
+    category: "lighting"
+  },
+  {
+    id: 11,
+    name: "Sport Rear Spoiler",
+    description: "Lightweight sport rear spoiler designed to improve stability and enhance exterior styling.",
+    price: 32000,
+    rate: 4.5,
+    image: spoiler1,
+    category: "exterior"
+  },
+  {
+    id: 12,
+    name: "GT Wing Spoiler",
+    description: "High-rise GT wing spoiler offering maximum downforce for performance vehicles.",
+    price: 42000,
+    rate: 4.7,
+    image: spoiler2,
+    category: "exterior"
+  },
+  {
+    id: 13,
+    name: "Ducktail Lip Spoiler",
+    description: "Sleek ducktail lip design that provides a subtle sporty upgrade with improved airflow.",
+    price: 34000,
+    rate: 4.4,
+    image: spoiler3,
+    category: "exterior"
+  },
+  {
+    id: 14,
+    name: "Carbon Fiber Style Spoiler",
+    description: "Premium carbon-style spoiler offering an aggressive look and better rear-end aerodynamics.",
+    price: 78000,
+    rate: 4.8,
+    image: spoiler4,
+    category: "exterior"
+  },
+  {
+    id: 15,
+    name: "OEM Style Rear Spoiler",
+    description: "Factory-style spoiler with a perfect fit for modern sedans and hatchbacks.",
+    price: 25000,
+    rate: 4.3,
+    image: spoiler5,
+    category: "exterior"
+  },
+  {
+    id: 16,
+    name: "13x6 Bronze Alloy Car Wheels",
+    description: "Premium 13-inch bronze finished alloy wheels suitable for compact cars. Lightweight and stylish.",
+    price: 38000,
+    rate: 4.3,
+    image: allo1,
+    category: "wheels"
+  },
+  {
+    id: 17,
+    name: "Toyota Premio Original Alloy Wheel Set",
+    description: "Genuine used Toyota Premio alloy wheels with durable build and smooth finish.",
+    price: 65000,
+    rate: 4.4,
+    image: allo2,
+    category: "wheels"
+  },
+  {
+    id: 18,
+    name: "17-inch Black Machine-Face Alloy Wheels",
+    description: "Sporty 17-inch black machine-face alloy set ideal for sedans and SUVs.",
+    price: 115000,
+    rate: 4.8,
+    image: allo3,
+    category: "wheels"
+  },
+  {
+    id: 19,
+    name: "BMW Sportline 5-Spoke Alloy Wheel",
+    description: "Original BMW-style 5-spoke alloy wheel offering a premium look and high performance.",
+    price: 145000,
+    rate: 4.7,
+    image: allo4,
+    category: "wheels"
+  },
+  {
+    id: 20,
+    name: "Mercedes-Benz AMG Twin-Spoke Alloy Wheel",
+    description: "High-quality Mercedes AMG twin-spoke alloy wheels with a luxury finish.",
+    price: 185000,
+    rate: 4.9,
+    image: allo5,
+    category: "wheels"
+  },
+  {
+    id: 21,
+    name: "Nissan GTR Performance Alloy Wheel",
+    description: "Stunning performance-inspired alloy wheel compatible with many Nissan models.",
+    price: 120000,
+    rate: 4.6,
+    image: allo6,
+    category: "wheels"
+  },
+  {
+    id: 22,
+    name: "Toyota Axio / Corolla Sport Alloy Wheel",
+    description: "Lightweight and durable alloy wheel set designed for Toyota Axio and Corolla.",
+    price: 72000,
+    rate: 4.4,
+    image: allo7,
+    category: "wheels"
+  },
+  {
+    id: 23,
+    name: "Honda Vezel RS Black Alloy Wheel",
+    description: "Sleek black alloy wheel designed for Honda Vezel RS models. Strong and stylish.",
+    price: 88000,
+    rate: 4.6,
+    image: allo8,
+    category: "wheels"
+  },
+  {
+    id: 24,
+    name: "BMW M-Sport Performance Alloy Wheel",
+    description: "M-Sport inspired alloy wheel offering aggressive looks and improved handling.",
+    price: 165000,
+    rate: 4.9,
+    image: allo9,
+    category: "wheels"
+  },
+  {
+    id: 25,
+    name: "Mercedes-Benz Diamond-Cut Luxury Alloy Wheel",
+    description: "Premium diamond-cut alloy wheel providing unmatched luxury aesthetics.",
+    price: 195000,
+    rate: 5.0,
+    image: allo10,
+    category: "wheels"
   }
 ]
 
-const categories = ["all", "exterior", "lighting", "wheels", "performance", "suspension"]
+const categories = ["all", "exterior", "lighting", "wheels"]
 
 interface User {
   id: string;
@@ -86,34 +284,40 @@ const Gallery: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const userData = localStorage.getItem("user");
 
-   useEffect(() => {
-      const userData = localStorage.getItem("user");
-  
-      if (userData) {
-        try {
-          const user = JSON.parse(userData);
-          setUser(user);
-        } catch (error) {
-          console.error("Error parsing user data:", error);
-        }
+    if (userData) {
+      try {
+        const user = JSON.parse(userData);
+        setUser(user);
+      } catch (error) {
+        console.error("Error parsing user data:", error);
       }
-    }, []);
-
+    }
+  }, []);
 
   const filteredItems = useMemo(() => {
-    return items
-      .filter(item => {
-        const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                            item.description.toLowerCase().includes(searchTerm.toLowerCase())
-        const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory
-        return matchesSearch && matchesCategory
-      })
-      .sort((a, b) => {
-        if (sortBy === 'name') return a.name.localeCompare(b.name)
-        if (sortBy === 'price') return b.price - a.price
-        return b.rate - a.rate
-      })
+    let filtered = items.filter(item => {
+      const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          item.description.toLowerCase().includes(searchTerm.toLowerCase())
+      const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory
+      return matchesSearch && matchesCategory
+    })
+
+    // Sorting logic
+    filtered = [...filtered].sort((a, b) => {
+      if (sortBy === 'name') {
+        return a.name.localeCompare(b.name)
+      } else if (sortBy === 'price') {
+        return a.price - b.price // Ascending order for price
+      } else if (sortBy === 'rate') {
+        return b.rate - a.rate // Descending order for rating 
+      }
+      return 0
+    })
+
+    return filtered
   }, [searchTerm, selectedCategory, sortBy])
 
   const formatPrice = (price: number) => {
@@ -122,6 +326,7 @@ const Gallery: React.FC = () => {
 
   const handleViewDetails = (item: GalleryItem) => {
     console.log('Viewing details for:', item.name)
+    // You can add navigation to detail page here if needed
   }
 
   const handleLogout = () => {
@@ -170,7 +375,6 @@ const Gallery: React.FC = () => {
 
                   {/* User Full Name Display */}
                   <div className="border-b border-gray-700 pb-3 mb-3">
-                   
                     <p className="text-yellow-500 font-semibold truncate">
                       {user?.fullName || "User"}
                     </p>
