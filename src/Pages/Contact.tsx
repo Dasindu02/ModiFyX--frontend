@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import Bg from "../assets/back2.jpg";
-import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
+import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaBars, FaTimes } from "react-icons/fa";
 import emailjs from '@emailjs/browser';
 import { useRef, useState} from "react";
 import type { FormEvent } from 'react';
@@ -9,6 +9,7 @@ export default function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
   const [isSending, setIsSending] = useState(false);
   const [messageSent, setMessageSent] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -42,36 +43,186 @@ export default function Contact() {
   };
 
   return (
-    <div className="fixed inset-0 h-screen w-screen overflow-hidden bg-black text-white">
-
+    <div className="min-h-screen fixed inset-0  bg-black text-white overflow-x-hidden">
       {/* NAVBAR */}
-      <nav className="relative bg-black bg-opacity-70 text-white p-4 z-10">
+      <nav className="relative bg-black bg-opacity-70 text-white p-4 z-50">
         <div className="container mx-auto flex justify-between items-center">
-          <div className="text-3xl font-bold font-pncb text-yellow-500 tracking-wider ">
+          <div className="text-2xl lg:text-3xl font-bold font-pncb text-yellow-500 tracking-wider">
             ModiFyX
           </div>
 
-          <div className="space-x-6">
-            <a href="/" className="hover:text-yellow-500">Home</a>
-            <a href="/Login" className="hover:text-yellow-500">Modifications</a>
-            <a href="/Login" className="hover:text-yellow-500">Gallery</a>
-            <a href="/Login" className="hover:text-yellow-500">AR View</a>
-            <a href="/Contact" className="hover:text-yellow-500">Contact</a>
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex space-x-6">
+            <a href="/" className="hover:text-yellow-500 transition-colors">Home</a>
+            <a href="/Login" className="hover:text-yellow-500 transition-colors">Modifications</a>
+            <a href="/Login" className="hover:text-yellow-500 transition-colors">Gallery</a>
+            <a href="/Login" className="hover:text-yellow-500 transition-colors">AR View</a>
+            <a href="/Contact" className="hover:text-yellow-500 transition-colors">Contact</a>
           </div>
+
+          {/* Mobile Menu Button */}
+          <button 
+            className="lg:hidden text-white text-2xl"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? <FaTimes /> : <FaBars />}
+          </button>
         </div>
+
+        {/* Mobile Navigation Menu */}
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden bg-black bg-opacity-90 mt-4 rounded-lg p-4"
+          >
+            <div className="flex flex-col space-y-4">
+              <a href="/" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setIsMenuOpen(false)}>Home</a>
+              <a href="/Login" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setIsMenuOpen(false)}>Modifications</a>
+              <a href="/Login" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setIsMenuOpen(false)}>Gallery</a>
+              <a href="/Login" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setIsMenuOpen(false)}>AR View</a>
+              <a href="/Contact" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setIsMenuOpen(false)}>Contact</a>
+            </div>
+          </motion.div>
+        )}
       </nav>
 
       {/* BACKGROUND IMAGE */}
       <div
-        className="absolute inset-0 bg-cover bg-center opacity-40"
+        className="fixed inset-0 bg-cover bg-center opacity-40"
         style={{ backgroundImage: `url(${Bg})` }}
       ></div>
 
       {/* MAIN CONTACT SECTION */}
-      <div className="flex items-center justify-center min-h-screen px-6 relative z-20">
+      <div className="relative z-20 min-h-screen flex items-center justify-center px-4 py-8 lg:py-0">
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 max-w-5xl w-full mb-16 ">
+        {/* MOBILE DESIGN */}
+        <div className="w-full max-w-md lg:hidden">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl overflow-hidden"
+          >
+            {/* Header */}
+            <div className="bg-yellow-500/20 p-6 text-center">
+              <motion.h1
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="text-3xl font-poppins font-bold text-yellow-500"
+              >
+                Contact Us
+              </motion.h1>
+              <p className="text-gray-200 mt-2 text-sm">
+                Get in touch with our team
+              </p>
+            </div>
 
+            {/* Contact Info */}
+            <div className="p-6 space-y-6">
+              {/* Address */}
+              <div className="flex items-center gap-4 p-3 bg-white/5 rounded-xl">
+                <FaMapMarkerAlt className="text-yellow-500 text-2xl flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold text-yellow-500 text-sm">Address</h3>
+                  <p className="text-gray-300 text-sm">
+                    NO:27/3, Wickramarachchi mw,<br />
+                    yakkala.11870
+                  </p>
+                </div>
+              </div>
+
+              {/* Phone */}
+              <div className="flex items-center gap-4 p-3 bg-white/5 rounded-xl">
+                <FaPhoneAlt className="text-yellow-500 text-2xl flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold text-yellow-500 text-sm">Phone</h3>
+                  <p className="text-gray-300 text-sm">0705243589</p>
+                </div>
+              </div>
+
+              {/* Email */}
+              <div className="flex items-center gap-4 p-3 bg-white/5 rounded-xl">
+                <FaEnvelope className="text-yellow-500 text-2xl flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold text-yellow-500 text-sm">Email</h3>
+                  <p className="text-gray-300 text-sm">support@modifyx.com</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Form Section */}
+            <div className="p-6 bg-black/20">
+              <motion.h2
+                animate={{ x: [0, 10, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                className="text-2xl font-poppins text-yellow-500 mb-6 text-center"
+              >
+                Send Message
+              </motion.h2>
+
+              {/* Success Message */}
+              {messageSent && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="bg-green-500 text-white p-3 rounded-lg mb-4 text-sm"
+                >
+                  Message sent successfully! We'll get back to you soon.
+                </motion.div>
+              )}
+
+              <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-4">
+                <input
+                  type="text"
+                  name="user_name"
+                  placeholder="Your Name"
+                  className="p-3 rounded-xl bg-white/20 focus:bg-white/30 outline-none placeholder-gray-400 text-sm"
+                  required
+                />
+
+                <input
+                  type="email"
+                  name="user_email"
+                  placeholder="Email"
+                  className="p-3 rounded-xl bg-white/20 focus:bg-white/30 outline-none placeholder-gray-400 text-sm"
+                  required
+                />
+
+                <textarea
+                  name="message"
+                  rows={4}
+                  placeholder="Your Message"
+                  className="p-3 rounded-xl bg-white/20 focus:bg-white/30 outline-none placeholder-gray-400 text-sm resize-none"
+                  required
+                />
+
+                <button
+                  type="submit"
+                  disabled={isSending}
+                  className={`${
+                    isSending ? 'bg-gray-600' : 'bg-[#C04000] hover:bg-[#e94d10]'
+                  } py-3 rounded-xl font-semibold text-white transition-all disabled:cursor-not-allowed mt-2`}
+                >
+                  {isSending ? (
+                    <span className="flex items-center justify-center">
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Sending...
+                    </span>
+                  ) : (
+                    'Send Message'
+                  )}
+                </button>
+              </form>
+            </div>
+          </motion.div>
+        </div>
+
+        <div className="hidden lg:grid grid-cols-1 md:grid-cols-2 gap-16 max-w-5xl w-full mb-16">
           {/* LEFT SIDE DETAILS */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
@@ -157,7 +308,7 @@ export default function Contact() {
                 type="text"
                 name="user_name"
                 placeholder="Your Name"
-                className="p-3 rounded-xl bg-white/20 focus:bg-white/30 outline-none"
+                className="p-3 rounded-xl bg-white/20 focus:bg-white/30 outline-none placeholder-gray-400"
                 required
               />
 
@@ -165,7 +316,7 @@ export default function Contact() {
                 type="email"
                 name="user_email"
                 placeholder="Email"
-                className="p-3 rounded-xl bg-white/20 focus:bg-white/30 outline-none"
+                className="p-3 rounded-xl bg-white/20 focus:bg-white/30 outline-none placeholder-gray-400"
                 required
               />
 
@@ -173,7 +324,7 @@ export default function Contact() {
                 name="message"
                 rows={4}
                 placeholder="Message"
-                className="p-3 rounded-xl bg-white/20 focus:bg-white/30 outline-none"
+                className="p-3 rounded-xl bg-white/20 focus:bg-white/30 outline-none placeholder-gray-400 resize-none"
                 required
               />
 
@@ -184,14 +335,22 @@ export default function Contact() {
                   isSending ? 'bg-gray-600' : 'bg-[#C04000] hover:bg-[#e94d10]'
                 } py-3 rounded-xl font-semibold text-lg transition-all disabled:cursor-not-allowed`}
               >
-                {isSending ? 'Sending...' : 'Send Message'}
+                {isSending ? (
+                  <span className="flex items-center justify-center">
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Sending...
+                  </span>
+                ) : (
+                  'Send Message'
+                )}
               </button>
             </form>
           </motion.div>
-
         </div>
       </div>
-
     </div>
   );
 }
