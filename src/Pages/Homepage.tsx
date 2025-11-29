@@ -14,6 +14,8 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
   const [moreOpen, setMoreOpen] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [showPopup1, setShowPopup1] = useState(false);
+
   const [showARPopup, setShowARPopup] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -548,7 +550,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+     {/* CTA Section */}
       <section className="relative z-10 py-16 lg:py-20 px-4">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 lg:mb-6">
@@ -558,11 +560,80 @@ const Home: React.FC = () => {
             Start your modification journey today with our AR technology. See the possibilities before you spend a dime.
           </p>
           <div className="flex flex-col lg:flex-row justify-center gap-4 max-w-sm lg:max-w-none mx-auto">
-            <button className="bg-yellow-500 text-black px-6 lg:px-8 py-3 rounded-lg font-semibold hover:bg-yellow-600 transition duration-300 text-sm lg:text-base">
+            <button 
+              onClick={() => setShowPopup1(true)}
+              className="bg-yellow-500 text-black px-6 lg:px-8 py-3 rounded-lg font-semibold hover:bg-yellow-600 transition duration-300 text-sm lg:text-base"
+            >
               Schedule Consultation
             </button>
           </div>
         </div>
+
+        {showPopup1 && (
+        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[9999] backdrop-blur-md p-4">
+          <div className="relative bg-gradient-to-br from-gray-800 to-black border border-yellow-500/40 text-white p-5 lg:p-6 rounded-xl lg:rounded-2xl shadow-2xl w-full max-w-sm text-center overflow-hidden">
+            <button
+              onClick={() => setShowPopup1(false)}
+              className="absolute top-2 lg:top-3 right-2 lg:right-3 text-gray-400 hover:text-yellow-500 transition-colors duration-300 z-20"
+            >
+              <svg className="w-4 lg:w-5 h-4 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-4">
+              <div className="absolute top-0 right-0 w-16 lg:w-20 h-16 lg:h-20 bg-yellow-500 rounded-full -translate-y-8 lg:-translate-y-10 translate-x-8 lg:translate-x-10"></div>
+              <div className="absolute bottom-0 left-0 w-12 lg:w-16 h-12 lg:h-16 bg-orange-500 rounded-full -translate-x-6 lg:-translate-x-8 translate-y-6 lg:translate-y-8"></div>
+            </div>
+
+            <div className="relative z-10">
+              <div className="text-3xl lg:text-4xl mb-3">🚧</div>
+              
+              <h2 className="text-xl lg:text-2xl font-bold text-white mb-3">
+                Coming Soon
+              </h2>
+
+              <div className="mb-4">
+                <p className="text-gray-300 mb-3 text-xs lg:text-sm">
+                  The ModiFyX App is not launched yet. We're working hard to bring you the ultimate vehicle modification experience.
+                </p>
+                
+                <div className="grid grid-cols-2 gap-2 text-xs mb-3">
+                  <div className="bg-yellow-500/10 rounded p-2">
+                    <div className="text-yellow-400 text-sm">📱</div>
+                    <div className="font-semibold text-xs">Mobile App</div>
+                    <div className="text-gray-400 text-xs">In Development</div>
+                  </div>
+                  <div className="bg-yellow-500/10 rounded p-2">
+                    <div className="text-yellow-400 text-sm">🎯</div>
+                    <div className="font-semibold text-xs">AR Features</div>
+                    <div className="text-gray-400 text-xs">Coming Soon</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gray-800/50 rounded-lg p-3 mb-4">
+                <p className="text-gray-300 text-xs lg:text-sm mb-1">
+                  🎉 <span className="text-yellow-400">Launch: Jan 2026</span>
+                </p>
+                <p className="text-gray-300 text-xs lg:text-sm">
+                  📧 <span className="text-yellow-400">contact@modifyx.com</span>
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <button
+                  onClick={() => setShowPopup1(false)}
+                  className="w-full border border-gray-600 text-gray-300 px-4 py-2 rounded-lg font-semibold hover:bg-gray-700 transition-all duration-300 text-xs lg:text-sm"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       </section>
 
       {/* Footer */}
