@@ -261,6 +261,8 @@ const Home: React.FC = () => {
             <a href="/profile" className="hover:text-yellow-500 transition-colors">Profile</a>
             <a href="#ar-view" className="hover:text-yellow-500 transition-colors">AR View</a>
             <a href="/Log-Contacts" className="hover:text-yellow-500 transition-colors">Contact</a>
+            <a href="/demo" className="hover:text-yellow-500 transition-colors">Demo</a>
+
 
             {/* Avatar Dropdown */}
             <div className="relative dropdown-container">
@@ -325,6 +327,8 @@ const Home: React.FC = () => {
               <a href="/profile" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setMobileMenuOpen(false)}>Profile</a>
               <a href="#ar-view" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setMobileMenuOpen(false)}>AR View</a>
               <a href="/Log-Contacts" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setMobileMenuOpen(false)}>Contact</a>
+              <a href="/demo" className="text-yellow-500 font-semibold py-2" onClick={() => setMobileMenuOpen(false)}>Demo</a>
+
             </div>
           </div>
         )}
