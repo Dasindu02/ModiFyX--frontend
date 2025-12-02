@@ -1,30 +1,27 @@
 import { useState, useEffect } from "react";
-import img1 from "../assets/bgimage.jpg";
-import img2 from "../assets/bg2.jpg";
-import img3 from "../assets/bg3.jpg";
+import videoBg from "../assets/1201.mp4";
 
 const Dashboard = () => {
-  const [currentBg, setCurrentBg] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const backgroundImages = [img1, img2, img3];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentBg((prev) => (prev + 1) % backgroundImages.length);
-    }, 15000);
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <div className="fixed inset-0 h-screen w-screen overflow-hidden">
-      <div
-        key={currentBg}
-        className="absolute inset-0 bg-cover bg-center transition-all duration-[1500ms]"
-        style={{ backgroundImage: `url(${backgroundImages[currentBg]})` }}
-      ></div>
-
-      <div className="absolute inset-0 bg-black/40"></div>
+      {/* Video Background */}
+      <div className="absolute inset-0 z-0">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src={videoBg} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        
+        {/* Optional: Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/40"></div>
+      </div>
 
       <nav className="relative bg-black/70 text-white p-4 z-10">
         <div className="container mx-auto flex justify-between items-center">
