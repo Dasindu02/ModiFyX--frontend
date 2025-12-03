@@ -31,10 +31,9 @@ const Login: React.FC = () => {
 
     try {
       const res = await axios.post(
-  "https://modi-fy-x-2025-cjve.vercel.app/api/auth/login",
-  form
-);
-
+        `${import.meta.env.VITE_API_URL}/api/auth/login`,
+        form
+      );
 
       console.log("LOGIN RESPONSE:", res.data);   
       console.log("USER OBJECT:", res.data.user);
