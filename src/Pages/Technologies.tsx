@@ -3,11 +3,13 @@ import img1 from "../assets/backg.jpg";
 import interfaceApp from "../assets/interface app.png"; 
 import { Link, useNavigate } from "react-router-dom";
 
+
 const Technologies: React.FC = () => {
   const [currentBg, setCurrentBg] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
+  
   const backgroundImages = [img1];
 
   useEffect(() => {
@@ -104,20 +106,16 @@ const Technologies: React.FC = () => {
   ];
 
   return (
-    <div className="relative min-h-screen bg-black text-white overflow-x-hidden">
+    <div className="min-h-screen fixed inset-0 bg-black text-white overflow-x-hidden">
       
-      {/* Animated Background - Fixed position */}
+      {/* Animated Background */}
       <div
         key={currentBg}
-        className="fixed inset-0 bg-cover bg-center transition-all duration-[1500ms] animate-slide -z-10"
+        className="fixed inset-0 bg-cover bg-center transition-all duration-[1500ms] animate-slide"
         style={{ backgroundImage: `url(${backgroundImages[currentBg]})` }}
       ></div>
       
-      {/* Dark Overlay - Fixed position */}
-      <div className="fixed inset-0 bg-black bg-opacity-60 -z-10"></div>
-
-      {/* Back Button */}
-      <button
+       <button
         onClick={() => navigate(-1)}
         className="fixed top-4 mt-16 left-4 z-50 bg-black/40 backdrop-blur-md p-3 rounded-full 
                   hover:bg-black/60 transition shadow-lg border border-white/20
@@ -139,8 +137,12 @@ const Technologies: React.FC = () => {
         </svg>
       </button>
 
+
+      {/* Dark Overlay */}
+      <div className="fixed inset-0 bg-black bg-opacity-60"></div>
+
       {/* Navbar */}
-      <nav className="relative bg-black bg-opacity-70 text-white p-4 z-40 backdrop-blur-md">
+      <nav className="relative bg-black bg-opacity-70 text-white p-4 z-50 backdrop-blur-md">
         <div className="container mx-auto flex justify-between items-center">
           <div className="text-2xl lg:text-3xl font-bold font-pncb text-yellow-500 tracking-wider">
             ModiFyX
@@ -179,7 +181,7 @@ const Technologies: React.FC = () => {
       </nav>
 
       {/* Main Content */}
-      <div className="relative z-10 text-white px-4 lg:px-6 py-8 lg:py-16 font-poppins">
+      <div className="relative z-10 min-h-screen text-white px-4 lg:px-6 py-8 lg:py-16 font-poppins">
         
         {/* MOBILE DESIGN */}
         <div className="lg:hidden space-y-8">
