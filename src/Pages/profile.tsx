@@ -29,14 +29,12 @@ const Profile: React.FC = () => {
       if (typeof window === "undefined") return;
       const raw = localStorage.getItem("user");
       if (!raw) {
-        // If no user in localStorage, check if logged in
         const currentUserRaw = localStorage.getItem("currentUser");
         if (currentUserRaw) {
           const currentUser = JSON.parse(currentUserRaw);
           setUser(currentUser);
           setFormData(currentUser);
         } else {
-          // Redirect to login if no user found
           navigate("/login");
         }
         return;
@@ -46,7 +44,6 @@ const Profile: React.FC = () => {
       setFormData(parsed);
     } catch (err) {
       console.error("Could not read user from localStorage:", err);
-      // Redirect to login on error
       navigate("/login");
     }
   }, [navigate]);
@@ -60,7 +57,6 @@ const Profile: React.FC = () => {
   };
 
   const handleLogout = () => {
-    // Remove session data but keep users data
     localStorage.removeItem("user");
     localStorage.removeItem("currentUser");
     localStorage.removeItem("userId");
@@ -82,35 +78,27 @@ const Profile: React.FC = () => {
         throw new Error("User ID is missing");
       }
 
-      // Get all users from localStorage
       const usersJson = localStorage.getItem('users');
       const users: User[] = usersJson ? JSON.parse(usersJson) : [];
       
-      // Find the current user
       const userIndex = users.findIndex(u => u.id === user.id);
       
       if (userIndex === -1) {
         throw new Error("User not found in database");
       }
 
-      // Create updated user object
       const updatedUser = {
         ...users[userIndex],
         ...formData,
-        // Don't update email (it's the identifier)
         email: users[userIndex].email
       };
 
-      // Update the users array
       users[userIndex] = updatedUser;
       
-      // Save updated users back to localStorage
       localStorage.setItem('users', JSON.stringify(users));
       
-      // Update session data (without password for security)
       const { password, ...userWithoutPassword } = updatedUser;
       
-      // Update localStorage data for current session
       localStorage.setItem("user", JSON.stringify(userWithoutPassword));
       localStorage.setItem("currentUser", JSON.stringify(userWithoutPassword));
       
