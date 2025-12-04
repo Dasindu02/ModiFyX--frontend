@@ -19,7 +19,6 @@ const Dashboard = () => {
           Your browser does not support the video tag.
         </video>
         
-        {/* Optional: Dark overlay for better text readability */}
         <div className="absolute inset-0 bg-black/40"></div>
       </div>
 
