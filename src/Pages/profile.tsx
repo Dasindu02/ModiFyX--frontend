@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import BGIMG from "../assets/back2.jpg";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import { useNavigate } from "react-router-dom"; 
-import { FaBars, FaTimes } from "react-icons/fa";
-
 
 type User = {
   id: string;
   fullName: string;
   email: string;
+  password?: string;
   phone?: string;
   age?: number;
   district?: string;
@@ -30,93 +28,101 @@ const Profile: React.FC = () => {
     try {
       if (typeof window === "undefined") return;
       const raw = localStorage.getItem("user");
-      if (!raw) return;
+      if (!raw) {
+        // If no user in localStorage, check if logged in
+        const currentUserRaw = localStorage.getItem("currentUser");
+        if (currentUserRaw) {
+          const currentUser = JSON.parse(currentUserRaw);
+          setUser(currentUser);
+          setFormData(currentUser);
+        } else {
+          // Redirect to login if no user found
+          navigate("/login");
+        }
+        return;
+      }
       const parsed: User = JSON.parse(raw);
       setUser(parsed);
       setFormData(parsed);
     } catch (err) {
       console.error("Could not read user from localStorage:", err);
+      // Redirect to login on error
+      navigate("/login");
     }
-  }, []);
+  }, [navigate]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: name === "age" ? (value ? parseInt(value) : undefined) : value
     }));
   };
 
   const handleLogout = () => {
+    // Remove session data but keep users data
     localStorage.removeItem("user");
-    navigate("/");
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("token");
+    navigate("/login");
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setMessage("");
 
     try {
       if (!user) {
-        console.error("❌ No user found in state");
         throw new Error("User not found");
       }
 
       if (!user.id) {
-        console.error("❌ User ID is missing:", user);
         throw new Error("User ID is missing");
       }
 
-      const updateURL = `http://localhost:5000/api/auth/update-profile/${user.id}`;
-      console.log("PUT URL:", updateURL);
-          console.log("🔍 registrationNo value:", formData.registrationNo);
-
-
-      const response = await fetch(updateURL, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const text = await response.text();
-      console.log("🔍 Raw response:", text);
-
-      let result;
-      try {
-        result = JSON.parse(text);
-      } catch (err) {
-        console.error("❌ Server did not return JSON");
-        throw new Error("Server error: Invalid JSON response");
-      }
-
-      if (!response.ok) {
-        console.error("❌ Server error:", result);
-        throw new Error(result.message || "Failed to update profile");
-      }
-
-      console.log("✅ Updated User:", result.user);
+      // Get all users from localStorage
+      const usersJson = localStorage.getItem('users');
+      const users: User[] = usersJson ? JSON.parse(usersJson) : [];
       
-      const updatedUserData = {
-        id: result.user._id || result.user.id,
-        fullName: result.user.fullName,
-        email: result.user.email,
-        phone: result.user.phone,
-        age: result.user.age,
-        district: result.user.district,
-        vehicleModel: result.user.vehicleModel,
-        registrationNo: result.user.registrationNo 
+      // Find the current user
+      const userIndex = users.findIndex(u => u.id === user.id);
+      
+      if (userIndex === -1) {
+        throw new Error("User not found in database");
+      }
+
+      // Create updated user object
+      const updatedUser = {
+        ...users[userIndex],
+        ...formData,
+        // Don't update email (it's the identifier)
+        email: users[userIndex].email
       };
 
-      localStorage.setItem("user", JSON.stringify(updatedUserData));
-      setUser(updatedUserData);
-      setFormData(updatedUserData);
+      // Update the users array
+      users[userIndex] = updatedUser;
+      
+      // Save updated users back to localStorage
+      localStorage.setItem('users', JSON.stringify(users));
+      
+      // Update session data (without password for security)
+      const { password, ...userWithoutPassword } = updatedUser;
+      
+      // Update localStorage data for current session
+      localStorage.setItem("user", JSON.stringify(userWithoutPassword));
+      localStorage.setItem("currentUser", JSON.stringify(userWithoutPassword));
+      
+      // Update state
+      setUser(userWithoutPassword);
+      setFormData(userWithoutPassword);
 
       setMessage("Profile updated successfully!");
       setIsEditing(false);
 
     } catch (error: any) {
-      console.error("❌ UPDATE ERROR:", error);
+      console.error("UPDATE ERROR:", error);
       setMessage(error.message || "Error updating profile");
     } finally {
       setIsLoading(false);
