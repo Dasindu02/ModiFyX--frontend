@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import bgImage2 from "../assets/95ed0b9c6915d22952ea343e6b1839d3.jpg";
 
@@ -7,6 +6,11 @@ interface RegisterForm {
   fullName: string;
   email: string;
   password: string;
+}
+
+interface User extends RegisterForm {
+  id: string;
+  createdAt: string;
 }
 
 const Register: React.FC = () => {
@@ -24,26 +28,48 @@ const Register: React.FC = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/auth/register`,
-        form
-      );
+      // Check if user already exists
+      const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
+      const userExists = existingUsers.some((user: User) => user.email === form.email);
+      
+      if (userExists) {
+        alert("User with this email already exists!");
+        return;
+      }
 
-      alert(res.data.message);
+      // Create new user object
+      const newUser: User = {
+        id: Date.now().toString(),
+        ...form,
+        createdAt: new Date().toISOString(),
+      };
+
+      // Save to localStorage
+      const updatedUsers = [...existingUsers, newUser];
+      localStorage.setItem('users', JSON.stringify(updatedUsers));
+      
+      // Also save the currently logged-in user
+      localStorage.setItem('currentUser', JSON.stringify(newUser));
+
+      alert("Registration successful! Welcome to ModiFyX!");
       setForm({ fullName: "", email: "", password: "" });
-      window.location.href = "/Login";
+      
+      // Navigate to login page
+      navigate("/login");
     } catch (error: any) {
-      alert(error.response?.data?.message || "Registration failed");
+      alert("Registration failed. Please try again.");
+      console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
+  
   return (
     <div className="min-h-screen flex justify-center items-center bg-[#36454F] p-4 lg:p-0">
       {/* BACK BUTTON */}
