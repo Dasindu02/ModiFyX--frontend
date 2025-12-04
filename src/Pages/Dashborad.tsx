@@ -1,31 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import videoBg from "../assets/1201.mp4";
 
 const Dashboard = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    
-    <div className="md:fixed md:inset-0 md:h-screen md:w-screen md:overflow-hidden relative min-h-screen w-full overflow-auto">
-      
+    <div className="fixed inset-0 h-screen w-screen overflow-hidden">
       {/* Video Background */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
+      <div className="absolute inset-0 z-0">
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="min-w-full min-h-full w-auto h-auto absolute top-1/2 left-1/2 
-                     -translate-x-1/2 -translate-y-1/2 object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
         >
           <source src={videoBg} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-
+        
         <div className="absolute inset-0 bg-black/40"></div>
       </div>
 
-      {/* Navigation */}
       <nav className="relative bg-black/70 text-white p-4 z-10">
         <div className="container mx-auto flex justify-between items-center">
           <div className="text-3xl font-bold font-pncb text-yellow-500 tracking-wider">
@@ -59,8 +55,7 @@ const Dashboard = () => {
         )}
       </nav>
 
-      {/* Main Content */}
-      <div className="relative z-20 flex min-h-screen items-center px-6 md:px-20 py-20">
+      <div className="relative z-20 flex h-full items-center px-6 md:px-20">
         <div className="max-w-2xl">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white drop-shadow-xl leading-snug">
             Try AR-powered car customization
@@ -92,8 +87,6 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-
-      <div className="block md:hidden h-20"></div>
     </div>
   );
 };
