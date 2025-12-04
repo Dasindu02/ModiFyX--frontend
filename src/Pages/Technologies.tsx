@@ -106,7 +106,7 @@ const Technologies: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen fixed inset-0 bg-black text-white overflow-x-hidden">
+    <div className="min-h-screen bg-black text-white overflow-x-hidden">
       
       {/* Animated Background */}
       <div
@@ -117,7 +117,7 @@ const Technologies: React.FC = () => {
       
        <button
         onClick={() => navigate(-1)}
-        className="fixed top-4 mt-16 left-4 z-50 bg-black/40 backdrop-blur-md p-3 rounded-full 
+        className="fixed top-4 mt-10 left-4 z-50 bg-black/40 backdrop-blur-md p-3 rounded-full 
                   hover:bg-black/60 transition shadow-lg border border-white/20
                   lg:absolute lg:top-6 lg:left-6"
       >
@@ -127,7 +127,7 @@ const Technologies: React.FC = () => {
           viewBox="0 0 24 24"
           strokeWidth={2}
           stroke="white"
-          className="w-5 h-5 lg:w-6 lg:h-6"
+          className="w-2 h-2 lg:w-6 lg:h-6"
         >
           <path
             strokeLinecap="round"
@@ -181,7 +181,7 @@ const Technologies: React.FC = () => {
       </nav>
 
       {/* Main Content */}
-      <div className="relative z-10 min-h-screen text-white px-4 lg:px-6 py-8 lg:py-16 font-poppins">
+      <div className="relative z-10 text-white px-4 lg:px-6 py-8 lg:py-16 font-poppins">
         
         {/* MOBILE DESIGN */}
         <div className="lg:hidden space-y-8">
