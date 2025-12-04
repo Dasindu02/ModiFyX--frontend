@@ -1,12 +1,24 @@
 import { useState } from "react";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-// import { useAuth } from "../context/AuthContext";
 import bgImage2 from "../assets/95ed0b9c6915d22952ea343e6b1839d3.jpg";
 
 interface LoginForm {
   email: string;
   password: string;
+}
+
+interface User {
+  id: string;
+  fullName: string;
+  email: string;
+  password: string;
+  createdAt: string;
+  lastLogin?: string;
+  phone?: string;
+  age?: number;
+  district?: string;
+  vehicleModel?: string;
+  registrationNo?: string;
 }
 
 const Login: React.FC = () => {
@@ -15,9 +27,7 @@ const Login: React.FC = () => {
     password: "",
   });
 
-  // const { login } = useAuth();
   const navigate = useNavigate();
-
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -25,60 +35,73 @@ const Login: React.FC = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/auth/login`,
-        form
-      );
-
-      console.log("LOGIN RESPONSE:", res.data);   
-      console.log("USER OBJECT:", res.data.user);
-      console.log("ALL USER DATA:", res.data.user);
-
-      alert(res.data.message);
-
-      const userId = res.data.user.id || res.data.user._id;
+      // Get all registered users from localStorage
+      const usersJson = localStorage.getItem('users');
+      const users: User[] = usersJson ? JSON.parse(usersJson) : [];
       
-      // Store token and user data
-      localStorage.setItem("userId", userId);
-      localStorage.setItem("token", res.data.token);
+      // Find user by email
+      const user = users.find(u => u.email.toLowerCase() === form.email.toLowerCase());
+      
+      if (!user) {
+        alert("No account found with this email. Please register first.");
+        setLoading(false);
+        return;
+      }
 
-      // Store user (IMPORTANT) 
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          id: userId, 
-          fullName: res.data.user.fullName,
-          email: res.data.user.email,
-          phone: res.data.user.phone,
-          age: res.data.user.age,
-          district: res.data.user.district,
-          vehicleModel: res.data.user.vehicleModel,
-          registrationNo: res.data.user.registrationNo
-        })
+      // Check if password matches
+      if (user.password !== form.password) {
+        alert("Incorrect password. Please try again.");
+        setLoading(false);
+        return;
+      }
+
+      // Update last login time
+      const updatedUser = {
+        ...user,
+        lastLogin: new Date().toISOString()
+      };
+      
+      // Update user in the array
+      const updatedUsers = users.map(u => 
+        u.id === user.id ? updatedUser : u
       );
+      
+      localStorage.setItem('users', JSON.stringify(updatedUsers));
+      
+      localStorage.setItem("userId", user.id);
+      localStorage.setItem("token", "local-auth-token"); 
 
-      const lastLogin = res.data.user.lastLogin; 
-      console.log("Previous Login:", lastLogin);
+      // console.log(localStorage);
 
-      if (!lastLogin) {
-        window.location.href = "/Loading";   // first-time login
+      
+      const { password, ...userWithoutPassword } = updatedUser;
+      localStorage.setItem("user", JSON.stringify(userWithoutPassword));
+      
+      localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
+
+      alert("Login successful! Welcome back to ModiFyX!");
+
+      if (!user.lastLogin) {
+        navigate("/Loading"); 
       } else {
-        window.location.href = "/Home";      // returning user
+        navigate("/Home"); 
       }
 
       setForm({ email: "", password: "" });
 
     } catch (error: any) {
-      alert(error.response?.data?.message || "Login failed");
+      console.error("Login error:", error);
+      alert("Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="min-h-screen  flex justify-center items-center bg-[#36454F] p-4 lg:p-0">
