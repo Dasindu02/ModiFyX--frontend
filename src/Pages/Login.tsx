@@ -106,7 +106,7 @@ const Login: React.FC = () => {
   return (
     <div className="min-h-screen  flex justify-center items-center bg-[#36454F] p-4 lg:p-0">
       <button
-        onClick={() => navigate(-1)}
+        onClick={() => navigate("/")}
         className="fixed top-4 left-4 z-50 bg-black/40 backdrop-blur-md p-3 rounded-full 
                   hover:bg-black/60 transition shadow-lg border border-white/20
                   lg:absolute lg:top-6 lg:left-6"
