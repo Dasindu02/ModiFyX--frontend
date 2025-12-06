@@ -106,7 +106,7 @@ const Technologies: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen fixed inset-0  bg-black text-white overflow-x-hidden">
+    <div className="min-h-screen bg-black text-white overflow-x-hidden">
       
       {/* Animated Background */}
       <div
