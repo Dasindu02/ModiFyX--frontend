@@ -127,7 +127,7 @@ const Login: React.FC = () => {
         </svg>
       </button>
 
-      <div className="lg:hidden w-full max-w-md">
+    <div className="fixed bg-black inset-0 h-screen w-screen overflow-y-auto">
         <div className="bg-black/40 backdrop-blur-lg rounded-3xl overflow-hidden shadow-2xl border border-white/10">
           <div 
             className="h-48 relative bg-cover bg-center"
