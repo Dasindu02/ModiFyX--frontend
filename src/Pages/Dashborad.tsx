@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import videoBg from "../assets/1201.mp4";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const Dashboard = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -22,36 +24,74 @@ const Dashboard = () => {
         <div className="absolute inset-0 bg-black/40"></div>
       </div>
 
-      <nav className="relative bg-black/70 text-white p-4 z-10">
+      <nav className="relative bg-black/70 text-white p-4 z-50">
         <div className="container mx-auto flex justify-between items-center">
-          <div className="text-3xl font-bold font-pncb text-yellow-500 tracking-wider">
+          <div className="text-2xl lg:text-3xl font-bold font-pncb text-yellow-500 tracking-wider">
             ModiFyX
           </div>
 
-          <div className="hidden md:flex space-x-6">
-            <a href="/" className="hover:text-yellow-500">Home</a>
-            <a href="/Login" className="hover:text-yellow-500">Modifications</a>
-            <a href="/Login" className="hover:text-yellow-500">Gallery</a>
-            <a href="/Login" className="hover:text-yellow-500">AR View</a>
-            <a href="/Contact" className="hover:text-yellow-500">Contact</a>
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex space-x-6">
+            <a href="/" className="hover:text-yellow-500 transition-colors">Home</a>
+            <a href="/Login" className="hover:text-yellow-500 transition-colors">Modifications</a>
+            <a href="/Login" className="hover:text-yellow-500 transition-colors">Gallery</a>
+            <a href="/Login" className="hover:text-yellow-500 transition-colors">AR View</a>
+            <a href="/Contact" className="hover:text-yellow-500 transition-colors">Contact</a>
           </div>
 
-          <button
+          <button 
+            className="lg:hidden text-white text-2xl"
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden text-2xl focus:outline-none"
           >
-            ☰
+            {menuOpen ? <FaTimes /> : <FaBars />}
           </button>
         </div>
 
         {menuOpen && (
-          <div className="md:hidden mt-4 space-y-3 text-center animate-fadeIn">
-            <a href="/" className="block hover:text-yellow-500">Home</a>
-            <a href="/Login" className="block hover:text-yellow-500">Modifications</a>
-            <a href="/Login" className="block hover:text-yellow-500">Gallery</a>
-            <a href="/Login" className="block hover:text-yellow-500">AR View</a>
-            <a href="/Contact" className="block hover:text-yellow-500">Contact</a>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden bg-black bg-opacity-90 mt-4 rounded-lg p-4"
+          >
+            <div className="flex flex-col space-y-4">
+              <a 
+                href="/" 
+                className="hover:text-yellow-500 transition-colors py-2" 
+                onClick={() => setMenuOpen(false)}
+              >
+                Home
+              </a>
+              <a 
+                href="/Login" 
+                className="hover:text-yellow-500 transition-colors py-2" 
+                onClick={() => setMenuOpen(false)}
+              >
+                Modifications
+              </a>
+              <a 
+                href="/Login" 
+                className="hover:text-yellow-500 transition-colors py-2" 
+                onClick={() => setMenuOpen(false)}
+              >
+                Gallery
+              </a>
+              <a 
+                href="/Login" 
+                className="hover:text-yellow-500 transition-colors py-2" 
+                onClick={() => setMenuOpen(false)}
+              >
+                AR View
+              </a>
+              <a 
+                href="/Contact" 
+                className="hover:text-yellow-500 transition-colors py-2" 
+                onClick={() => setMenuOpen(false)}
+              >
+                Contact
+              </a>
+            </div>
+          </motion.div>
         )}
       </nav>
 
