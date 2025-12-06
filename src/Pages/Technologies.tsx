@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import img1 from "../assets/backg.jpg";
 import interfaceApp from "../assets/interface app.png"; 
-import { Link, useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const Technologies: React.FC = () => {
   const [currentBg, setCurrentBg] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  
   const backgroundImages = [img1];
 
   useEffect(() => {
@@ -107,7 +107,6 @@ const Technologies: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
-      
       {/* Animated Background */}
       <div
         key={currentBg}
@@ -115,19 +114,62 @@ const Technologies: React.FC = () => {
         style={{ backgroundImage: `url(${backgroundImages[currentBg]})` }}
       ></div>
       
-       <button
+      {/* Dark Overlay */}
+      <div className="fixed inset-0 bg-black bg-opacity-60"></div>
+
+      <nav className="sticky lg:fixed top-0 left-0 right-0 bg-black bg-opacity-70 text-white p-4 z-50 backdrop-blur-md">
+        <div className="container mx-auto flex justify-between items-center">
+          <div className="text-2xl lg:text-3xl font-bold font-pncb text-yellow-500 tracking-wider">
+            ModiFyX
+          </div>
+
+          <div className="hidden lg:flex space-x-6">
+            <a href="/" className="hover:text-yellow-500 transition-colors duration-300">Home</a>
+            <a href="/Login" className="hover:text-yellow-500 transition-colors duration-300">Modifications</a>
+            <a href="/Login" className="hover:text-yellow-500 transition-colors duration-300">Gallery</a>
+            <a href="/Login" className="hover:text-yellow-500 transition-colors duration-300">AR View</a>
+            <a href="/Contact" className="hover:text-yellow-500 transition-colors duration-300">Contact</a>
+          </div>
+
+          <button 
+            className="lg:hidden text-white text-2xl"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? <FaTimes /> : <FaBars />}
+          </button>
+        </div>
+
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden bg-black bg-opacity-90 mt-4 rounded-lg p-4"
+          >
+            <div className="flex flex-col space-y-4">
+              <a href="/" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setIsMenuOpen(false)}>Home</a>
+              <a href="/Login" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setIsMenuOpen(false)}>Modifications</a>
+              <a href="/Login" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setIsMenuOpen(false)}>Gallery</a>
+              <a href="/Login" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setIsMenuOpen(false)}>AR View</a>
+              <a href="/Contact" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setIsMenuOpen(false)}>Contact</a>
+            </div>
+          </motion.div>
+        )}
+      </nav>
+
+      <button
         onClick={() => navigate(-1)}
-        className="fixed top-4 mt-10 left-4 z-50 bg-black/40 backdrop-blur-md p-3 rounded-full 
-                  hover:bg-black/60 transition shadow-lg border border-white/20
-                  lg:absolute lg:top-6 lg:left-6"
+        className="fixed top-20 left-4 z-40 bg-black/50 backdrop-blur-md p-3 rounded-full 
+                  hover:bg-black/70 transition-all duration-300 shadow-lg border border-white/20 
+                  hover:scale-110 active:scale-95 lg:hidden"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          strokeWidth={2}
+          strokeWidth={2.5}
           stroke="white"
-          className="w-2 h-2 lg:w-6 lg:h-6"
+          className="w-5 h-5"
         >
           <path
             strokeLinecap="round"
@@ -137,56 +179,13 @@ const Technologies: React.FC = () => {
         </svg>
       </button>
 
-
-      {/* Dark Overlay */}
-      <div className="fixed inset-0 bg-black bg-opacity-60"></div>
-
-      {/* Navbar */}
-      <nav className="relative bg-black bg-opacity-70 text-white p-4 z-50 backdrop-blur-md">
-        <div className="container mx-auto flex justify-between items-center">
-          <div className="text-2xl lg:text-3xl font-bold font-pncb text-yellow-500 tracking-wider">
-            ModiFyX
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex space-x-6">
-            <a href="/" className="hover:text-yellow-500 transition-colors duration-300">Home</a>
-            <a href="/Login" className="hover:text-yellow-500 transition-colors duration-300">Modifications</a>
-            <a href="/Login" className="hover:text-yellow-500 transition-colors duration-300">Gallery</a>
-            <a href="/Login" className="hover:text-yellow-500 transition-colors duration-300">AR View</a>
-            <a href="/Contact" className="hover:text-yellow-500 transition-colors duration-300">Contact</a>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button 
-            className="lg:hidden text-white text-2xl"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            ☰
-          </button>
-        </div>
-
-        {/* Mobile Navigation Menu */}
-        {isMenuOpen && (
-          <div className="lg:hidden bg-black bg-opacity-90 mt-4 rounded-lg p-4">
-            <div className="flex flex-col space-y-4">
-              <a href="/" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setIsMenuOpen(false)}>Home</a>
-              <a href="/Login" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setIsMenuOpen(false)}>Modifications</a>
-              <a href="/Login" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setIsMenuOpen(false)}>Gallery</a>
-              <a href="/Login" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setIsMenuOpen(false)}>AR View</a>
-              <a href="/Contact" className="hover:text-yellow-500 transition-colors py-2" onClick={() => setIsMenuOpen(false)}>Contact</a>
-            </div>
-          </div>
-        )}
-      </nav>
-
       {/* Main Content */}
-      <div className="relative z-10 text-white px-4 lg:px-6 py-8 lg:py-16 font-poppins">
+      <div className="relative z-10 text-white px-4 lg:px-6 py-8 lg:py-16 font-poppins pt-16 lg:pt-20">
         
         {/* MOBILE DESIGN */}
-        <div className="lg:hidden space-y-8">
+        <div className="lg:hidden space-y-8 pb-8">
           {/* Page Title */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-8 pt-4">
             <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-yellow-500 to-orange-600 bg-clip-text text-transparent">
               Our Technologies
             </h1>
@@ -332,8 +331,30 @@ const Technologies: React.FC = () => {
           </div>
         </div>
 
-        {/* DESKTOP DESIGN - ORIGINAL PRESERVED */}
-        <div className="hidden lg:block">
+        <div className="hidden lg:block pt-8">
+          {/* Back Button for Desktop */}
+          <button
+            onClick={() => navigate(-1)}
+            className="fixed top-24 left-6 z-40 bg-black/50 backdrop-blur-md p-3 rounded-full 
+                      hover:bg-black/70 transition-all duration-300 shadow-lg border border-white/20 
+                      hover:scale-110 active:scale-95"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2.5}
+              stroke="white"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </button>
+
           {/* Page Title */}
           <div className="text-center mb-16">
             <h1 className="text-6xl font-bold mb-4 bg-gradient-to-r from-yellow-500 to-orange-600 bg-clip-text text-transparent drop-shadow-2xl">
