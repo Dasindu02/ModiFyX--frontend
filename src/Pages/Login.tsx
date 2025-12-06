@@ -87,7 +87,7 @@ const Login: React.FC = () => {
       alert("Login successful! Welcome back to ModiFyX!");
 
       if (!user.lastLogin) {
-        navigate("/Loading"); 
+        // navigate("/Loading"); 
       } else {
         navigate("/Home"); 
       }
