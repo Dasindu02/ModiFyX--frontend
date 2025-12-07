@@ -30,6 +30,8 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [alert, Setalert] = useState<string | null>(null);
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -38,6 +40,8 @@ const Login: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    Setalert(null);
+
 
     try {
       // Get all registered users from localStorage
@@ -48,14 +52,14 @@ const Login: React.FC = () => {
       const user = users.find(u => u.email.toLowerCase() === form.email.toLowerCase());
       
       if (!user) {
-        alert("No account found with this email. Please register first.");
+        Setalert("No account found with this email. Please register first.");
         setLoading(false);
         return;
       }
 
       // Check if password matches
       if (user.password !== form.password) {
-        alert("Incorrect password. Please try again.");
+        Setalert("Incorrect password. Please try again.");
         setLoading(false);
         return;
       }
@@ -84,7 +88,7 @@ const Login: React.FC = () => {
       
       localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
 
-      alert("Login successful! Welcome back to ModiFyX!");
+      Setalert("Login successful! Welcome back to ModiFyX!");
 
       if (!user.lastLogin) {
         // navigate("/Loading"); 
@@ -96,7 +100,7 @@ const Login: React.FC = () => {
 
     } catch (error: any) {
       console.error("Login error:", error);
-      alert("Login failed. Please try again.");
+      Setalert("Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -148,6 +152,12 @@ const Login: React.FC = () => {
             <h2 className="text-2xl font-semibold font-poppins mb-6 text-white text-center">
               Sign In
             </h2>
+            
+             {alert && (
+        <div className="p-3 bg-red-900/30 border border-red-700 rounded-xl text-red-200 text-sm mb-4">
+          {alert}
+        </div>
+      )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
@@ -193,6 +203,8 @@ const Login: React.FC = () => {
                   </button>
                 </div>
               </div>
+
+             
 
               {/* Remember Me & Forgot Password */}
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
@@ -303,6 +315,12 @@ const Login: React.FC = () => {
             <div className="w-1/2 bg-black/20 backdrop-blur-md p-10 text-white flex flex-col justify-center">
               <div className="max-w-md mx-auto w-full">
                 <h2 className="text-3xl font-semibold font-poppins mb-8">Sign In</h2>
+
+                 {alert && (
+        <div className="p-3 bg-red-900/30 border border-red-700 rounded-xl text-red-200 text-sm mb-2 -mt-4 ">
+          {alert}
+        </div>
+      )}
 
                 <form onSubmit={handleSubmit} className="space-y-3">
                   <div>
