@@ -30,8 +30,7 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [alert, Setalert] = useState<string | null>(null);
-
+  const [alert, setAlert] = useState<{ type: 'success' | 'error', message: string } | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -40,8 +39,7 @@ const Login: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    Setalert(null);
-
+    setAlert(null);
 
     try {
       // Get all registered users from localStorage
@@ -52,14 +50,20 @@ const Login: React.FC = () => {
       const user = users.find(u => u.email.toLowerCase() === form.email.toLowerCase());
       
       if (!user) {
-        Setalert("No account found with this email. Please register first.");
+        setAlert({ 
+          type: 'error', 
+          message: "No account found with this email. Please register first." 
+        });
         setLoading(false);
         return;
       }
 
       // Check if password matches
       if (user.password !== form.password) {
-        Setalert("Incorrect password. Please try again.");
+        setAlert({ 
+          type: 'error', 
+          message: "Incorrect password. Please try again." 
+        });
         setLoading(false);
         return;
       }
@@ -76,39 +80,40 @@ const Login: React.FC = () => {
       );
       
       localStorage.setItem('users', JSON.stringify(updatedUsers));
-      
       localStorage.setItem("userId", user.id);
-      localStorage.setItem("token", "local-auth-token"); 
+      localStorage.setItem("token", "local-auth-token");
 
-      // console.log(localStorage);
-
-      
       const { password, ...userWithoutPassword } = updatedUser;
       localStorage.setItem("user", JSON.stringify(userWithoutPassword));
-      
       localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
 
-      Setalert("Login successful! Welcome back to ModiFyX!");
+      // Show success alert
+      setAlert({ 
+        type: 'success', 
+        message: "Successfully Login ! Welcome to ModiFyX!" 
+      });
 
-      if (!user.lastLogin) {
-        // navigate("/Loading"); 
-      } else {
-        navigate("/Home"); 
-      }
-
+      // Clear form
       setForm({ email: "", password: "" });
+
+      // Navigate to home after a short delay to show the success message
+      setTimeout(() => {
+        navigate("/Home");
+      }, 1000);
 
     } catch (error: any) {
       console.error("Login error:", error);
-      Setalert("Login failed. Please try again.");
+      setAlert({ 
+        type: 'error', 
+        message: "Login failed. Please try again." 
+      });
     } finally {
       setLoading(false);
     }
   };
 
-
   return (
-    <div className="min-h-screen  flex justify-center items-center bg-[#36454F] p-4 lg:p-0">
+    <div className="min-h-screen flex justify-center items-center bg-[#36454F] p-4 lg:p-0">
       <button
         onClick={() => navigate("/")}
         className="fixed top-4 left-4 z-50 bg-black/40 backdrop-blur-md p-3 rounded-full 
@@ -131,7 +136,8 @@ const Login: React.FC = () => {
         </svg>
       </button>
 
-    <div className="fixed bg-black inset-0 h-screen w-screen overflow-y-auto">
+      {/* Mobile View */}
+      <div className="fixed bg-black inset-0 h-screen w-screen overflow-y-auto lg:hidden">
         <div className="bg-black/40 backdrop-blur-lg rounded-3xl overflow-hidden shadow-2xl border border-white/10">
           <div 
             className="h-48 relative bg-cover bg-center"
@@ -153,11 +159,15 @@ const Login: React.FC = () => {
               Sign In
             </h2>
             
-             {alert && (
-        <div className="p-3 bg-red-900/30 border border-red-700 rounded-xl text-red-200 text-sm mb-4">
-          {alert}
-        </div>
-      )}
+            {alert && (
+              <div className={`p-3 rounded-xl text-sm mb-4 ${
+                alert.type === 'success' 
+                  ? 'bg-green-900/30 border border-green-700 text-green-200' 
+                  : 'bg-red-900/30 border border-red-700 text-red-200'
+              }`}>
+                {alert.message}
+              </div>
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
@@ -203,8 +213,6 @@ const Login: React.FC = () => {
                   </button>
                 </div>
               </div>
-
-             
 
               {/* Remember Me & Forgot Password */}
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
@@ -284,6 +292,7 @@ const Login: React.FC = () => {
         </div>
       </div>
 
+      {/* Desktop View */}
       <div className="hidden lg:flex fixed w-full min-h-screen justify-center items-center bg-[#36454F] p-4">
         {/* BIG CARD */}
         <div
@@ -316,11 +325,15 @@ const Login: React.FC = () => {
               <div className="max-w-md mx-auto w-full">
                 <h2 className="text-3xl font-semibold font-poppins mb-8">Sign In</h2>
 
-                 {alert && (
-        <div className="p-3 bg-red-900/30 border border-red-700 rounded-xl text-red-200 text-sm mb-2 -mt-4 ">
-          {alert}
-        </div>
-      )}
+                {alert && (
+                  <div className={`p-3 rounded-xl text-sm mb-2 -mt-4 ${
+                    alert.type === 'success' 
+                      ? 'bg-green-900/30 border border-green-700 text-green-200' 
+                      : 'bg-red-900/30 border border-red-700 text-red-200'
+                  }`}>
+                    {alert.message}
+                  </div>
+                )}
 
                 <form onSubmit={handleSubmit} className="space-y-3">
                   <div>
