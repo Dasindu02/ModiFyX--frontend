@@ -20,7 +20,7 @@ const Technologies: React.FC = () => {
   }, []);
 
   // Launch date: January 1, 2026
-  const launchDate = new Date('2026-01-01').getTime();
+  const launchDate = new Date('2026-02-10').getTime();
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -505,7 +505,7 @@ const Technologies: React.FC = () => {
           <div className="max-w-4xl mx-auto mb-20">
             <div className="bg-gradient-to-r from-yellow-500/20 to-orange-600/20 backdrop-blur-md rounded-3xl p-12 border border-yellow-500/30 text-center">
               <h3 className="text-4xl font-bold text-white mb-6">
-                Launching January 2026
+                Launching February 2026
               </h3>
               <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
                 Get ready to transform how you customize your car. ModiFyX is coming soon with revolutionary AR technology.
