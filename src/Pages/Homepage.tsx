@@ -410,7 +410,7 @@ const Home: React.FC = () => {
               <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">
                 AR Experience
               </h2>
-              <div className="text-yellow-400 text-base lg:text-lg font-semibold mb-4">Coming January 2026</div>
+              <div className="text-yellow-400 text-base lg:text-lg font-semibold mb-4">Coming March 2026</div>
 
               {/* Progress Bar */}
               <div className="w-full bg-gray-700 rounded-full h-2 mb-6">

@@ -381,7 +381,7 @@ const Gallery: React.FC = () => {
                 Coming Soon!
               </h3>
               <p className="text-gray-300 mb-6">
-                The app will launch in Jan 2026. This feature will be unlocked when the app launches.
+                The app will launch in March 2026. This feature will be unlocked when the app launches.
               </p>
               <button
                 onClick={handleClosePopup}
