@@ -619,7 +619,7 @@ const Home: React.FC = () => {
 
               <div className="bg-gray-800/50 rounded-lg p-3 mb-4">
                 <p className="text-gray-300 text-xs lg:text-sm mb-1">
-                  🎉 <span className="text-yellow-400">Launch: Jan 2026</span>
+                  🎉 <span className="text-yellow-400">Launch: March 2026</span>
                 </p>
                 <p className="text-gray-300 text-xs lg:text-sm">
                   📧 <span className="text-yellow-400">contact@modifyx.com</span>
